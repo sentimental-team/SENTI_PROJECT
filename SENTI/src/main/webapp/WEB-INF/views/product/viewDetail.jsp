@@ -356,7 +356,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         <div class="css-0 ed3wcbu0">
                             <div id="option1" class="ed3wcbu1 css-1rhyn18 e15gsm0h0">
                                 <div  id="" role="button" class="css-79elbk e15gsm0h3">
-                                <input id="option2"  value="${pDetail.largeCtgrId }"  class="e15gsm0h1 css-qmbng6 e1u1pays0"  placeholder="향기" autocapitalize="none" type="text" readonly="" value="">
+                                <%-- <input id="option2"  value="${pDetail.largeCtgrId }"  class="e15gsm0h1 css-qmbng6 e1u1pays0"  placeholder="향기" autocapitalize="none" type="text" readonly="" value=""> --%>
+                                	<select class="e15gsm0h1 css-qmbng6 e1u1pays0">
+                                		<!-- option -->
+                                	</select>
                                 <svg class="e15gsm0h2 css-cs4h3q e11s8l6m0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
                                         <g class="select_option1" fill="none" fill-rule="evenodd" stroke="rgb(212, 212, 212)" stroke-width="3">
                                             <path class="select_option2" d="M28 1L13.97 15 0 1.058"></path>
@@ -367,8 +370,8 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                     </div>
                     <div class="css-jna93d e1aklvx10">
                     
-                   			 <button id="pdp_shopping_basket" class="e1aklvx11 eh8h1ux0 css-vqh4y e12h9sp60 cartbtn" type="button">
-                       		     <a href="/sentiBoard/list/cartIn.do?pd_id=2">장바구니 담기</a>
+                   			 <button id="pdp_shopping_basket" class="e1aklvx11 eh8h1ux0 css-vqh4y e12h9sp60 cartbtn" type="button" data-pdid="${pDetail.pdId }">
+                       		      장바구니 담기
                              </button>
                              <button id="pdp_buy_now" class="e1aklvx12 er7ti0m0 css-103n73x e12h9sp60" type="button">바로 구매하기</button>
                     </div>
@@ -387,7 +390,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 </svg></button>
             <div class="css-ckmsfc ed08qdi2">
                 <div class="css-k008qs e3cblyz0">
-                    <h3 class="css-ysqghp e3cblyz1">상품번호 : ${pDetail.pdInfo}</h3>&nbsp;<span></span>
+                    <h3 class="css-ysqghp e3cblyz1">${pDetail.pdInfo}</h3>&nbsp;<span></span>
                 </div>
             </div>
         </section>
@@ -971,9 +974,35 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 </body>
 <script>
-	$(".cartbtn").on("click", function(){
-		confirm("장바구니에 추가 하시겠습니까?")
-	})
+	$(document).ready(function(){
+	    $(".cartbtn").on("click", function(event){
+	        event.preventDefault();
+	
+	        let confirmCart = confirm("장바구니에 추가 하시겠습니까?");
+	
+	        if (confirmCart) {
+	            let pdId = $(this).data('pdid'); // data-pdId 속성에서 제품 ID를 가져옴
+	
+	            let cartDTO = {
+	                pdId: pdId
+	            };
+	
+	            $.ajax({
+	                type: "POST",
+	                url: "/user/cartAdd.do",
+	                contentType: "application/json",
+	                data: JSON.stringify(cartDTO),
+	                success: function(response) {
+	                        alert("상품이 장바구니에 추가되었습니다.");
+	                    
+	                },
+	                error: function() {
+	                    alert("오류가 발생했습니다.");
+	                }
+	            });
+	        }
+	    });
+	});
 	
 	// 리뷰 쓰기 누르면 리뷰 쓰는창 뜨기
 	$(".reviewWrite").on("click",function(){
