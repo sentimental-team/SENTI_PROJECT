@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,12 +41,14 @@
 				<div class="cart-info">
 					<span class="cart-text">장바구니에 담은 상품이 없습니다.</span>
 					<div class="shop-btn">
-						<a class="go-29cm" href="/sentiBoard/main.jsp">CONTINUE SHOPPING</a>
+						<a class="go-29cm" href="/main.do">CONTINUE SHOPPING</a>
 					</div>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<section class="cart-box">
+				<form id="deleteCartForm" method="post" action="/user/cartDel.do">
+					<!-- 
 					<div class="checkbox1">
 						<span class="checkbox-span" id="select-btn">
 							<input type="checkbox" class="checkbox-btn" />
@@ -53,13 +56,14 @@
 							선택(0/1)
 							</label>
 						</span>
-						<button class="delete"  type="button">선택삭제</button>
+						<button class="delete" type="button">선택삭제</button>
 					</div>
+					 -->
 					<div class="cart-box-info">
 						<div class="box-info-top">
 							<div class="top-info1">
 								<span class="checkbox-span">
-									<input type="checkbox" class="checkbox-btn-all" name="checkbox-btn-all" onclick="selectAll()"/>
+									<input type="checkbox" class="checkbox-btn-all" name="checkbox-btn-all" checked="checked"/>
 								</span>
 							</div>
 							<div class="top-info2">상품 정보</div>
@@ -69,45 +73,55 @@
 						</div>
 						<div class="box-info-bottom">
 							<h3 class="item-name" translate="no"></h3>
+							
 							<c:forEach items="${list }" var="list">
 							<div class="box-bottom-main" id="checkbox-bottom-main">
 								<div class="bot-checkbox">
 									<span class="checkbox-span">
-										<input type="checkbox" class="checkbox-btn" name="checkbox-btn" id="checkbox-btn" onclick="checkSelectAll()"/>
+										<!-- <input type="checkbox" class="checkbox-btn" name="checkbox-btn" id="checkbox-btn" onclick="checkSelectAll()" checked="checked"/> -->
+										<input type="checkbox" class="checkbox-btn" name="cartIdList" id="checkbox-btn" checked="checked" data-cartId="${list.cartId }" value="${list.cartId }"/>
+										<input type="hidden" class="invisible-pdPrice" value="${list.pdPrice }" />
+										<input type="hidden" class="invisible-pdPrice" value="${list.deliPay }" />
 									</span>
 								</div>
 								<div class="bot-info1">
 									<div class="bot-item-info">
-										<a href="https://product.29cm.co.kr/catalog/2523110">
+										<a href="/product/viewDetail.do?pd_id=${list.pdId }">
 											<img class="item-img" src="${list.pdImageURL }" alt="${list.pdName }" loading="lazy"/>
 										</a>
 										<div class="item-img-info">
 											<div translate="no">
-												<a class="item-brand" href="https://shop.29cm.co.kr/brand/13646">${list.brandName }</a>
+												<a class="item-brand" href="/product/viewDetail.do?pd_id=${list.pdId }">${list.brandName }
+													<input type="hidden" value="${list.pdId }" />
+												</a>
 											</div>
-											<a id="item-title" class="item-title" href="https://product.29cm.co.kr/catalog/2523110">${list.pdName }</a>
+											<a id="item-title" class="item-title" href="/product/viewDetail.do?pd_id=${list.pdId }">${list.pdName }</a>
 											<div class="item-price">
-												<span class="price">${list.pdPrice }원</span>
+												<span class="price">
+												 	<fmt:formatNumber pattern="##,###" value="${list.pdPrice }" />원
+												</span>
 											</div>
-											<div class="item-bot-info">옵션 : ${list.testOption }</div>
+											<div class="item-bot-info">옵션 : ${list.selectOption }</div>
 										</div>
 									</div>
-									<button id="item-delete" class="item-delete"></button>
+									<%-- <button id="item-delete" class="item-delete" data-cartId="${list.cartId }"></button> --%>
+									<a id="item-delete" class="item-delete" href="/user/cartDel.do?cart_id=${list.cartId }"></a>
 								</div>
 								
 								<div class="bot-info2">
 									<div class="item-cnt">
 										<div class="item-cnt-box">
 											<button id="minus-btn" class="minus" type="button">-</button>
-											<input type="text" class="cnt" autocapitalize="none" id="num-of-item" inputmode="numeric" value="1"/>
+											<input type="text" class="cnt" autocapitalize="none" id="num-of-item" inputmode="numeric" value="${list.stock }"/>
 											<button id="plus-btn" class="plus" type="button" >+</button>
 										</div>
 									</div>
 								</div>
 								<div class="bot-info3">
 									<div>
-										<span class="sell-price" id="sell-price">${list.pdPrice }</span>
-										원
+										<span class="sell-price" id="sell-price">
+											<fmt:formatNumber pattern="##,###" value="${list.pdPrice }" />원
+										</span>
 									</div>
 									<div class="buy-now">
 										<button class="buy-now-btn" type="button">BUY NOW</button>
@@ -115,23 +129,24 @@
 								</div>
 								<div class="bot-info4">
 									<div class="bot-deli-pay">
-										${list.deliPay }
+										<fmt:formatNumber pattern="##,###" value="${list.deliPay }" /> 
 									</div>
 								</div>
 							</div>
-							
 							</c:forEach>
+							
 						</div>
 						
 					</div>
 					<div class="bot-bot">
 						<div class="bot-bot-btn">
-							<button class="click-btn" id="delete-btn" name="click-btn">선택상품 삭제</button>
+							<button type="submit" class="click-btn" id="delete-btn" name="click-btn">선택상품 삭제</button>
 						</div>
 						<p class="max-cart-text">장바구니는 최대 100개의 상품을 담을 수 있습니다.</p>
 					</div>
+					</form>
 				</section>
-				<section class="total-pay" >			 
+				<section class="total-pay" >
 					<div class="total-pay-box">
 						<div class="total-pay-top">
 							<div class="total-pay-text1">총 주문금액</div>
@@ -141,110 +156,235 @@
 						<div class="total-pay-bottom">
 							<div class="total-pay-bottom-box1">
 								<span class="total-pay-price">
-									<strong class="total-pay-price-text">${totalPayPrice }</strong>
-									원
+									<strong class="total-charge">
+										<span class="total-pay-price-text">
+											
+										</span>
+									</strong>
 								</span>
-								<span class="total-pay-item-cnt">총 ${totalCnt}개</span>
+								<span class="total-pay-item-cnt">
+									<span class="total-cnt-text">
+										
+									</span>
+								</span>
 							</div>
 							<div class="total-pay-bottom-box2">
 								<i class="css-15wexqq e17g5zv810"></i>
 								<span class="total-pay-deli-charge">
-									<strong class="total-charge">${totalDeliveryPay }</strong>
-									원
+									<strong class="total-charge2">
+										<span class="total-deli-price-text">
+											
+										</span>
+									</strong>
 								</span>
 							</div>
 							<div class="total-pay-bottom-box3">
 								<i class="css-z92i1e e17g5zv811"></i>
 								<span class="total-pay-price2">
-									<strong class="total-pay-price-text2">${totalChargePay}</strong>
-									원
+									<strong class="total-pay-price-text2">
+										<span class="final-total-price-text">
+											
+										</span>
+									</strong>
 								</span>
 							</div>
 						</div>
 					</div>
 				</section>
-				
-			
 			<div class="main-bottom">
-					<a class="continue" href="https://www.29cm.co.kr">CONTINUE SHOPPING</a>
-					<button id="check-out-btn" class="check-out" type="button"><a href="#">CHECK OUT</a></button>
+					<a class="continue" href="/main.do">CONTINUE SHOPPING</a>
+					<button id="check-out-btn" class="check-out" type="button">CHECK OUT</button>
+					<script>
+						$(".check-out").on("click", function(){
+							let confirmOrder = confirm("주문페이지로 이동하겠습니까 ?")
+							location.href = "/user/order.do";
+							
+							if (!confirmOrder) {
+								event.preventDefault;
+							}
+							
+						})
+					</script>
 			</div>
 			</c:otherwise>
 		</c:choose>
-				
-		
 	</div>
+	
+	<%-- 
+	<form action="/cartDel.do" method="post" class="delete_form">
+			<input type="hidden" name="cartId" class="delete_cartId">
+			<input type="hidden" name="memberId" value="${member.memberId}">
+	</form>
+	 --%>
+	
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 </footer>
 </body>
 <script>
-	 function checkSelectAll() {
-	        // 선택된 체크박스
-	        const checkboxes = document.querySelectorAll('input[name="checkbox-btn"]');
-	        // select all 체크박스
-	        const selectAll = document.querySelector('input[name="checkbox-btn-all"]');
-	        
-	        // 모든 체크박스가 체크된 경우, selectAll 체크박스를 체크함
-	        selectAll.checked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-	    }
+	$(".buy-now-btn").on("click", function(){
+		let confirmOrderOne = confirm("상품을 구매하시겠습니까 ?")
+		location.href = "/user/order.do";
+		
+		if (!confirmOrderOne) {
+			event.preventDefault;
+		}
+		
+	})
+</script>	    
+<script>
 
-	    function selectAll(selectAll) {
-	        const checkboxes = document.getElementsByName('checkbox-btn');
+   	$(document).ready(function(){
+   		// 수량에서 + 버튼 눌렀을 때
+   		$(".plus").on("click", function() {
+   			let changeStock = $(this).siblings(".cnt");
+   			let currentVal = parseInt(changeStock.val());
+   			changeStock.val(currentVal + 1);
+   			updatePrice(changeStock);
+   		});
 
-	        checkboxes.forEach((checkbox) => {
-	            checkbox.checked = selectAll.checked;
-	        });
-	    }
+   		// - 버튼 눌렀을 때
+   		$(".minus").on("click", function() {
+   			let changeStock = $(this).siblings(".cnt");
+   			let currentVal = parseInt(changeStock.val());
+   			if (currentVal > 1) { // 최소 값이 1이 되도록 설정
+   				changeStock.val(currentVal - 1);
+   				updatePrice(changeStock);
+   			}
+   		});
 
-	    document.querySelectorAll('input[name="checkbox-btn"]').forEach((checkbox) => {
-	        checkbox.addEventListener('click', checkSelectAll);
-	    });
+   		$(".cnt").on("input", function() {
+   			let currentVal = $(this).val();
+   			if (isNaN(currentVal) || currentVal <= 0) { // 숫자가 아니거나 0 이하일 경우 1로 고정
+   				$(this).val(1);
+   			}
+   			updatePrice($(this));
+   		});
+   	})
+   	
+   	
+   	/* 상품 수량 증가할때 가격도 증가되도록 ajax 처리 해야함...
+   	function updatePrice(changeStock){
+   		let cartId = changeStock.closest(".box-bottom-main").find(".checkbox-btn").data("cartId");
+   		let currentStock = changeStock.val();
+   		
+   		$.ajax({
+   			url: "/user/updateCart.do",
+   			type: "POST",
+   			data: JSON.stringify({ cartId: cartId, currentStock: currentStock }),
+            contentType: 'application/json; charset=UTF-8',
+   			success: function(response) {
+   				let changePrice = changeStock.closest(".box-bottom-main").find(".sell-price");
+   				changePrice.text(response.updatedPrice + "원");
 
-	   document.querySelector('input[name="checkbox-btn-all"]').addEventListener('click', function() {
-	        selectAll(this);
-	    });
+   				updateTotalPrice();
+   			}
+   		});
+   	}
+   	 */
+   	
+</script>
+	   	
+<script>
+	$(document).ready(function(){
+		setTotalInfo();
+	});
 
-	    document.querySelectorAll('input[name="checkbox-btn"]').forEach((checkbox) => {
-	        checkbox.addEventListener('click', checkSelectAll);
-	    });
+	$(".checkbox-btn").on("change", function(){
+		setTotalInfo($(".checkbox-span"));
+	})
+
+	$(".checkbox-btn-all").on("click", function(){
+		
+		var chk = $(".checkbox-btn-all").prop("checked");
+		if(chk) {
+			$(".checkbox-btn").prop("checked", true);
+		} else {
+			$(".checkbox-btn").prop("checked", false);
+		}
+		
+		setTotalInfo($(".checkbox-span"));	
+		
+	});
 	
-	/* $(".click-btn").on("click", function(){
-		confirm("선택한 상품을 삭제 하시겠습니까?")
-	}) */
+	$(".checkbox-btn").click(function(){
+		$(".checkbox-btn-all").prop("checked", false);
+	});
 	
-	$(document).ready(function() {
-    $(".click-btn").click(function() {
-        if (confirm("선택한 상품을 삭제 하시겠습니까?")) {
-            let selectedItems = [];
-            $('input[name="checkbox-btn"]:checked').each(function() {
-                let id = $(this).closest('.box-bottom-main').data('id');
-                selectedItems.push(id);
-            });
+	$(".checkbox-btn").on("click", function() {
+        var allChecked = $(".checkbox-btn").length === $(".checkbox-btn:checked").length;
+        $(".checkbox-btn-all").prop("checked", allChecked);
+    });
 
-            if (selectedItems.length > 0) {
-                $.ajax({
-                    url: '../user/cart.jsp',  // 서버에서 삭제 요청을 처리할 URL
-                    type: 'POST',
-                    data: JSON.stringify(selectedItems),
-                    contentType: 'application/json; charset=UTF-8',
-                    success: function(response) {
-                        // 성공적으로 삭제한 후 페이지 새로고침
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        alert('삭제 중 오류가 발생했습니다.');
-                    }
-                });
-            } else {
-                alert('삭제할 항목을 선택하세요.');
-            }
+/* 총 금액, 총 갯수, 총 결제금액을 여기저기서 사용하기위해 전역변수로 뺌 */
+let totalCnt = 0;
+let totalPrice = 0;
+let finalTotalPrice = 0;
+let totalDeliPrice = 0;
+
+function setTotalInfo(){
+	totalPrice = 0;
+	totalCnt = 0;
+	totalDeliPrice = 0;
+	finalTotalPrice = 0;
+	
+	$(".box-bottom-main").each(function(index, element){
+		if ($(element).find(".checkbox-btn").is(":checked") === true) {
+			totalPrice += parseInt($(element).find(".invisible-pdPrice").val());
+			totalCnt += parseInt($(element).find("#num-of-item").val());
+		}
+	})
+	
+	/* 배송비를 다 합치는 건 아니라고 생각해서 조건을 넣어 각 총 주문금액에 따라 배송비 부여 */
+	if (totalPrice >= 100000) {
+		totalDeliPrice = 0;
+	} else if (totalPrice == 0) {
+		totalDeliPrice = 0;
+	} else {
+		totalDeliPrice = 3000;
+	}
+	
+	finalTotalPrice = totalPrice + totalDeliPrice;
+	
+	$(".total-pay-price-text").text(totalPrice.toLocaleString() + "원");
+	$(".total-cnt-text").text("총 " + totalCnt + "개")
+	$(".total-deli-price-text").text(totalDeliPrice.toLocaleString() + "원");
+	$(".final-total-price-text").text(finalTotalPrice.toLocaleString() + "원");
+}
+</script>
+<script>
+	/* 개별삭제 */
+	$(".item-delete").on("click", function(){
+    	let confirm_del = confirm("담기 취소 하시겠습니까 ?");
+		
+    	if (!confirm_del) {
+            event.preventDefault();
         }
-    });
-});
+	});
 	
-	$(".check-out-btn").on("click", function() {
-        window.location.href = "#";
-    });
+	/* 체크된 상품 삭제 */
+   	$(".click-btn").on("click", function(){
+   		
+    	if (totalCnt == 0) {
+			alert("항목을 선택하세요.")
+			
+			event.preventDefault();
+		} else {
+	    	var confirm_del2 = confirm("선택한 " + totalCnt + "개 상품을 삭제하시겠습니까?");
+	
+	    	if(confirm_del2) {
+	    	    var checkArr = new Array();
+	    	    
+	   	    $(".checkbox-btn:checked").each(function() {
+	               checkArr.push($(this).attr("data-cartId"));
+	        });
+		      
+			} else {
+				event.preventDefault();
+			}
+		}
+    	
+
+   });
 </script>
 </html>
