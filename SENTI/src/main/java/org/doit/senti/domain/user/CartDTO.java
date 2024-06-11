@@ -22,6 +22,7 @@ public class CartDTO {
 	private String selectOption;
 	private int deliPay;
 	private int stock;
+	private int largeCtgrId;
 	
 	//deleteCart
 	private int cartId;
