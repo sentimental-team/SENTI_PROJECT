@@ -268,7 +268,7 @@ a {
 				<p>로그인에 실패했습니다. 다시 시도해주세요.</p>
 			</c:if>
 			<form method="post"
-				action="/join.do">
+				action="/signUp/login.do">
 				<div class="css-1xlzx9v e8awftn0">
 					<input class="css-coe4td e6yr7gu0" placeholder="아이디 (이메일)"
 						autocapitalize="none" autocomplete="username" type="text"
@@ -280,6 +280,7 @@ a {
 						autocomplete="current-password" type="password" name="password">
 				</div>
 				<button class="btn_login" type="submit">로그인하기</button>
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			</form>
 		</div>
 		<div class="joinTop"></div>
@@ -294,7 +295,7 @@ a {
 </footer>
 </body>
 <script>
-$(document).ready(function() {
+/* $(document).ready(function() {
     $('#loginForm').submit(function(event) {
         event.preventDefault();
         $.ajax({
@@ -311,6 +312,6 @@ $(document).ready(function() {
             }
         });
     });
-});
+}); */
 </script>
 </html>
