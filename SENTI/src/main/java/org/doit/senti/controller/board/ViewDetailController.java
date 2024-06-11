@@ -24,6 +24,7 @@ public class ViewDetailController {
 	public int insertCart(CartDTO cartDTO, @RequestBody BoardVO bvo) throws Exception {
 		
 		cartDTO.setPdId(bvo.getPdId());
+		cartDTO.setSelectOption(bvo.getSelectOption());
 		
 		int result = vMapper.insertCart(cartDTO);
 		
