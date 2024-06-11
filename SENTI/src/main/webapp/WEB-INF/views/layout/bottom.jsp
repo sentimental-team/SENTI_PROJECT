@@ -448,7 +448,7 @@
                 <a class="css-1lznoou e1t68iwn2" style="color: black" href="inquiry/inquiry.do">1:1 상담내역</a>
                 <a class="css-1lznoou e1t68iwn2" style="color: black" href="#">마케팅 제휴, 입점, 대량 주문 문의</a>
                 <a class="css-1lznoou e1t68iwn2" style="color: black" href="#">상품 Q&amp;A내역</a>
-                <a class="css-1lznoou e1t68iwn2" style="color: black" href="#">공지사항</a>
+                <a class="css-1lznoou e1t68iwn2" style="color: black" href="/noticeBoard/notice.do">공지사항</a>
                 <a class="css-1lznoou e1t68iwn2" style="color: black" href="#">FAQ</a>
                 <a class="css-1lznoou e1t68iwn2" style="color: black" href="#">고객의 소리</a>
             </li>
