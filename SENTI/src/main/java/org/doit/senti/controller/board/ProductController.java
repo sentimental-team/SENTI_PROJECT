@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.doit.senti.domain.board.BoardVO;
+import org.doit.senti.domain.board.ProductCategoryDTO;
 import org.doit.senti.domain.board.ProductImageDTO;
 import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.domain.board.ProductRegisterDTO;
+import org.doit.senti.mapper.CategoryMapper;
 import org.doit.senti.mapper.ProductRegisterMapper;
 import org.doit.senti.mapper.ReviewMapper;
 import org.doit.senti.service.board.BoardService;
@@ -48,11 +50,18 @@ public class ProductController {
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
+	private CategoryMapper categoryMapper;
 
 
 	@GetMapping("/productRegister.do")
-	public String productReg(HttpSession session) throws Exception{
-
+	public String productReg(HttpSession session, Model model) throws Exception{
+		
+		List<ProductCategoryDTO> mainCtgrList = categoryMapper.getMainCtgr();
+		List<ProductCategoryDTO> brandList = categoryMapper.getBrand();
+		
+		model.addAttribute("mainCtgrList", mainCtgrList);
+		model.addAttribute("brandList", brandList);
+		
 		return "product/productRegister.jsp";
 	}
 
@@ -71,13 +80,24 @@ public class ProductController {
 	public String productReg( ProductRegisterDTO pdDTO
 						, ProductImageDTO pdImageDTO
 						, HttpServletRequest request ) throws Exception{ 
+			
+			int rowCount = 0;
 		
+			String smallCtgrIdStr = request.getParameter("smallCtgrId");
+			
+			if(smallCtgrIdStr == null || smallCtgrIdStr.isEmpty()) {
+				rowCount = this.productRegister.insertProductNoneSmallCtgr(pdDTO);
+			}
+			else {
+				int smallCtgrId = Integer.parseInt(smallCtgrIdStr);
+				pdDTO.setSmallCtgrId(smallCtgrId);
+				rowCount = this.productRegister.insertProduct(pdDTO);
+			}
+		    
 		    List<MultipartFile> pdImageList = pdImageDTO.getPdImageList();
 		    MultipartFile pdInfoImage = pdImageDTO.getPdInfoImage();
 		    String uploadRealPath = null;
 		    String uploadRealPath2 = null;
-		    
-		    int rowCount = this.productRegister.insertProduct(pdDTO);
 		    
 			System.out.println(">>>>>>>>>" + pdImageList);
 			for(MultipartFile pdImage : pdImageList) {

@@ -1,16 +1,20 @@
 package org.doit.senti.controller.board;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.doit.senti.domain.board.BoardVO;
+import org.doit.senti.domain.board.ProductCategoryDTO;
 import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.mapper.BoardMapper;
+import org.doit.senti.mapper.CategoryMapper;
 import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +34,9 @@ public class RESTController {
 	
 	@Autowired
 	private LikeService likeService;
+	
+	@Autowired
+	private CategoryMapper categoryMapper;
 	
 	@PostMapping(value = "/men_ci.do"
 			,produces = {					
@@ -88,7 +95,42 @@ public class RESTController {
 		
 	}
 	
-	 
+	@PostMapping(value = "/largeCtgr.do" 
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getLargeCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int mainCtgrId = pcDTO.getMainCtgrId();
+		
+		return this.categoryMapper.getLargeCtgr(mainCtgrId);
+		
+	}
+	
+	@PostMapping(value = "/mediumCtgr.do"
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getMediumCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int largeCtgrId = pcDTO.getLargeCtgrId();
+		
+		return this.categoryMapper.getMediumCtgr(largeCtgrId);
+		
+	}
+	
+	@PostMapping(value = "/smallCtgr.do"
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getSmallCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int mediumCtgrId = pcDTO.getMediumCtgrId();
+		
+		return this.categoryMapper.getSmallCtgr(mediumCtgrId);
+		
+	}
+	
 	
 	
 }///

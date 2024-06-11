@@ -600,12 +600,12 @@ button {
                         </a>
                      </li>
                      <li class="my-page1"><a class="my-page2"
-                        href="${pageContext.request.contextPath}mypage/mypage.do"> <i class="my-icon"></i>
+                        href="/user/mypage.do"> <i class="my-icon"></i>
                            <strong class="my-page-text">MY PAGE</strong>
                      </a>
                      </li>
                      <li class="my-like1"><a class="my-like2"
-                        href="#"> <i
+                        href="/user/mylike.do"> <i
                            class="like-icon"></i> <strong class="my-like-text">MY
                               LIKE</strong>
                      </a></li>
