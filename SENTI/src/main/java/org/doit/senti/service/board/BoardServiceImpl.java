@@ -3,6 +3,7 @@ package org.doit.senti.service.board;
 import java.util.List;
 
 import org.doit.senti.domain.board.BoardVO;
+import org.doit.senti.domain.board.PagingVO;
 import org.doit.senti.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
 
