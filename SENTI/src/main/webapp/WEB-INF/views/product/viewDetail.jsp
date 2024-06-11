@@ -284,10 +284,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         
                         <div class="css-lcoy4n ek83fdm7">
                             <div class="css-1rr4qq7 ejuizc30">
-                                <p class="css-1bci2fm ejuizc31">${pDetail.pdPrice}</p>
+                                <p class="css-1bci2fm ejuizc31"><fmt:formatNumber pattern="###,###" value="${pDetail.pdPrice}" />원</p>
                                
                                 <div class="css-h6obet ejuizc33">
-                                    <div><span class="css-1jsmahk ejuizc32">${pDetail.pdDiscountRate}</span><span id="pdp_product_price"
+                                    <div><span class="css-1jsmahk ejuizc32">${pDetail.pdDiscountRate}%</span><span id="pdp_product_price"
                                             class="css-4bcxzt ejuizc34"><fmt:formatNumber pattern="###,###" value="${pDetail.discounted }" /><em                                           
                                                 class="css-a5v5ts ejuizc35">원</em></span></div>
                                     <div class="css-1cevk7j ep1otq20">
@@ -359,11 +359,16 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                 <%-- <input id="option2"  value="${pDetail.largeCtgrId }"  class="e15gsm0h1 css-qmbng6 e1u1pays0"  placeholder="향기" autocapitalize="none" type="text" readonly="" value=""> --%>
                                 	<select class="e15gsm0h1 css-qmbng6 e1u1pays0">
                                 		<!-- option -->
+                                		<option>옵션을 선택해주세요.</option>
+									        <c:forEach items="${oDetail}" var="item">
+									            <option value="${item.pdOptionName}">${item.pdOptionName}</option>
+									        </c:forEach>
+									    
                                 	</select>
-                                <svg class="e15gsm0h2 css-cs4h3q e11s8l6m0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
+                               <!--  <svg class="e15gsm0h2 css-cs4h3q e11s8l6m0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
                                         <g class="select_option1" fill="none" fill-rule="evenodd" stroke="rgb(212, 212, 212)" stroke-width="3">
                                             <path class="select_option2" d="M28 1L13.97 15 0 1.058"></path>
-                                        </g>
+                                        </g> -->
                                 </svg></div>
                             </div>
                         </div>
