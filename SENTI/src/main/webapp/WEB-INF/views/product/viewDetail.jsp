@@ -390,7 +390,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 </svg></button>
             <div class="css-ckmsfc ed08qdi2">
                 <div class="css-k008qs e3cblyz0">
-                    <h3 class="css-ysqghp e3cblyz1">상품번호 : ${pDetail.pdInfo}</h3>&nbsp;<span></span>
+                    <h3 class="css-ysqghp e3cblyz1">${pDetail.pdInfo}</h3>&nbsp;<span></span>
                 </div>
             </div>
         </section>
