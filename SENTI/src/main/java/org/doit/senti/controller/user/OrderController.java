@@ -16,17 +16,5 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/user/*")
 public class OrderController {
-	
-	@Autowired
-	private OrderMapper orderMapper;
-	
-	@GetMapping("/order.do")
-	public String getCart(Model model) throws Exception {
-		log.info(">>>>>>>>> OrderController.getOrder() <<<<<<<<<<");
-		List<CartDTO> list = this.orderMapper.getOrder();
-		
-		model.addAttribute("list", list);
-		
-		return "/user/order.do";
-	}
+
 }

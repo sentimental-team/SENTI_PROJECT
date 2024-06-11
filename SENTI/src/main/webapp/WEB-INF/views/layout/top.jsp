@@ -662,8 +662,10 @@ button {
             </nav>
             <div class="bottom">
                <ul class="bot-ul">
-                  <li class="bot-li"><a class="bot-a"
-                     href="https://shop.29cm.co.kr/best-items">BEST</a></li>
+                  <li class="bot-li">
+                  <a class="bot-a"
+                     href="#">BEST</a>
+                   </li>
                   <li class="bot-li">
                      <div class="div-ctgr">WOMEN</div>
                   </li>

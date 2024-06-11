@@ -72,6 +72,12 @@ public class BoardServiceImpl implements BoardService{
 		return lDetail;
 	}
 
+	@Override
+	public List<BoardVO> getOption(int large_ctgr_id) {
+		List<BoardVO> olist = this.boardMapper.oRead(large_ctgr_id);
+		return olist;
+	}
+
 
 
 	

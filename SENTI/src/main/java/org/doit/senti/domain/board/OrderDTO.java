@@ -22,4 +22,6 @@ public class OrderDTO {
 	private int payTypeId;
 	private int pdId;
 	private int couponId;
+	
+	
 }
