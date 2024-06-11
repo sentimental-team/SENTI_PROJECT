@@ -5,6 +5,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+<title>감도 깊은 취향 셀렉트샾 29CM</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="http://localhost/jspPro/images/SiSt.ico">
@@ -994,6 +995,14 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	                data: JSON.stringify(cartDTO),
 	                success: function(response) {
 	                        alert("상품이 장바구니에 추가되었습니다.");
+	                        
+	                        let confirmMove = confirm("장바구니로 이동하시겠습니까 ?");
+	                        
+	                        if (confirmMove) {
+								location.href = "/user/cart.do";
+							} else {
+								event.preventDefault();
+							} 
 	                    
 	                },
 	                error: function() {
