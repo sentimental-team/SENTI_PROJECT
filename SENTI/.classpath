@@ -31,6 +31,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Tools/spring-tool-suite-3.9.18.RELEASE-e4.21.0-win32-x86_64/sts-bundle/sts-3.9.18.RELEASE/lombok.jar"/>
+	<classpathentry kind="lib" path="C:/Tools/eclipse-jee-2021-09-R-win32-x86_64/eclipse/lombok.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
