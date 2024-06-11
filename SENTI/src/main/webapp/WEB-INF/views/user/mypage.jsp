@@ -48,7 +48,7 @@
     
     <ul _ngcontent-lqh-c51="">
       <li _ngcontent-lqh-c51="">
-        <a _ngcontent-lqh-c51="" routerlink="/heart" class="btn_heart" href="/mypage/heart">
+        <a _ngcontent-lqh-c51="" routerlink="/heart" class="btn_heart" href="/user/mylike.do">
           <div _ngcontent-lqh-c51="" class="ico_wrap">
             <span _ngcontent-lqh-c51="" class="ico_svg">
               <ruler-svg-icon-heart _ngcontent-lqh-c51=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" style="width: 100%; height: 100%;">

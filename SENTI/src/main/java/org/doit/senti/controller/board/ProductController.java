@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.doit.senti.domain.board.BoardVO;
 import org.doit.senti.domain.board.ProductImageDTO;
+import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.domain.board.ProductRegisterDTO;
 import org.doit.senti.mapper.ProductRegisterMapper;
 import org.doit.senti.mapper.ReviewMapper;
 import org.doit.senti.service.board.BoardService;
+import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +41,10 @@ public class ProductController {
 	
 	@Autowired
 	private BoardService boardService;
-
+	
+	@Autowired
+	private LikeService likeService;
+	
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
@@ -59,19 +66,6 @@ public class ProductController {
 		return fileUuidName;
 
 	}
-	//	@PostMapping("/productRegister.do")
-	//	public String productReg() throws Exception{
-	//		
-	//		//System.out.println(">>>>>>>" + pdDTO);
-	//		System.out.println(">>>>>>>" );
-	//		
-	////		  ProductRegisterDTO pdDTO
-	////			, ProductImageDTO pdImageDTO
-	////			, HttpServletRequest request
-	//			return "main.jsp";
-	//		 
-	//	}
-
 
 	@PostMapping("/productRegister.do")
 	public String productReg( ProductRegisterDTO pdDTO
@@ -155,16 +149,41 @@ public class ProductController {
 	  
 	 
 	@GetMapping("/men.do")
-	public String listup(HttpSession session, Model model,@RequestParam("large_ctgr_id") int large_ctgr_id, @RequestParam("medium_ctgr_id") int medium_ctgr_id) throws Exception{
+	public String listup(HttpSession session, Model model,
+			
+			@RequestParam("large_ctgr_id") int large_ctgr_id,
+			@RequestParam("medium_ctgr_id") int medium_ctgr_id,
+			
+			HttpServletRequest req, HttpServletResponse res
+			) throws Exception{
 		
 		log.info("> BoardController.list()...");
+		
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardService.getList(medium_ctgr_id);
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	     }
+
 	      model.addAttribute("mList",this.boardService.mList(large_ctgr_id));
-	      model.addAttribute("list",  this.boardService.getList(medium_ctgr_id));
-	      model.addAttribute("lList",this.boardService.lList(large_ctgr_id));
+	      // model.addAttribute("list",  this.boardService.getList(medium_ctgr_id));
+	      model.addAttribute("list",  productList);
+	      model.addAttribute("loginMemberId", loginMemberId);
 	      
 		return "product/men.jsp";
 		
 	}
+
 	
 	@GetMapping("/viewDetail.do")
 	public String viewDetail(HttpSession session, Model model,@RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
