@@ -54,6 +54,7 @@
 	 -->
 	<select id="getList" resultType="org.doit.senti.domain.board.BoardVO">	
 		
+
 SELECT
     p.pd_id,
     p.brand_id,
@@ -66,7 +67,8 @@ SELECT
     pd_image_url,
     pd_name,
     pd_info_image_url,
-    c.medium_ctgr_name
+    c.medium_ctgr_name,
+    l.large_ctgr_id
     
     
 FROM
@@ -74,9 +76,10 @@ FROM
     JOIN brand         b ON p.brand_id = b.brand_id
     JOIN product_image i ON p.pd_id = i.pd_id
     JOIN medium_ctgr c ON p.medium_ctgr_id = c.medium_ctgr_id
+    JOIN large_ctgr l on p.large_ctgr_id=l.large_ctgr_id
     
 WHERE
-    p.medium_ctgr_id = #{medium_ctgr_id, jdbcType=VARCHAR} 	
+    p.medium_ctgr_id =  #{medium_ctgr_id, jdbcType=VARCHAR} 	
 	</select>
 	
 	<select id="mRead" resultType="org.doit.senti.domain.board.BoardVO">			
@@ -87,9 +90,19 @@ WHERE large_ctgr_id = #{large_ctgr_id}
 	</select>
 	
 		<select id="lRead" resultType="org.doit.senti.domain.board.BoardVO">			
-select large_ctgr_name
-from large_ctgr
-where large_ctgr_id=#{large_ctgr_id}
+SELECT l.large_ctgr_name 
+FROM large_ctgr l
+Where l.large_ctgr_id=#{large_ctgr_id}
+	</select>
+	
+		
+		<select id="oRead" resultType="org.doit.senti.domain.board.BoardVO">			
+SELECT
+    pd_option_name
+FROM
+    product_option
+WHERE
+    large_ctgr_id = #{large_ctgr_id}
 	</select>
 	
 	
@@ -168,32 +181,39 @@ SELECT
     b.brand_name,
     i.pd_image_url,
     s.small_ctgr_id,
-    s.small_ctgr_name
+    s.small_ctgr_name,
+    l.large_ctgr_id
 FROM
          product p
     JOIN brand         b ON p.brand_id = b.brand_id
     JOIN product_image i ON p.pd_id = i.pd_id 
     JOIN small_ctgr s on p.small_ctgr_id = s.small_ctgr_id
+    JOIN large_ctgr l on p.large_ctgr_id = l.large_ctgr_id
 where p.medium_ctgr_id = #{medium_ctgr_id}
      </select>
      	 <select id="selectBySmallCtgrId" resultType="org.doit.senti.domain.board.BoardVO">
 
-SELECT 
+SELECT
     p.pd_id,
     p.pd_name,
     p.pd_price,
     b.brand_name,
     i.pd_image_url,
     s.small_ctgr_id,
-    s.small_ctgr_name
+    s.small_ctgr_name,
+    l.large_ctgr_id
 FROM
          product p
     JOIN brand         b ON p.brand_id = b.brand_id
-    JOIN product_image i ON p.pd_id = i.pd_id 
-    JOIN small_ctgr s on p.small_ctgr_id = s.small_ctgr_id
-where p.small_ctgr_id = #{small_ctgr_id}
+    JOIN product_image i ON p.pd_id = i.pd_id
+    JOIN small_ctgr    s ON p.small_ctgr_id = s.small_ctgr_id
+    JOIN large_ctgr    l ON p.large_ctgr_id = l.large_ctgr_id
+WHERE
+    p.small_ctgr_id = #{small_ctgr_id}
      </select>
      
+     
+
 
 
 

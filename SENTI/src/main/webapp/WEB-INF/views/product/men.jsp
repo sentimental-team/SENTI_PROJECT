@@ -63,13 +63,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
             <c:forEach var="list" items="${list}">
                 <li class="photo1">
                     <div class="cc">
-                        <a href="/product/viewDetail.do?pd_id=${list.pdId}">
+                        <a href="/product/viewDetail.do?pd_id=${list.pdId}&large_ctgr_id=${list.largeCtgrId}">
                             <div class="dd">
                                 <img alt="" src="${list.pdImageUrl}" class="ff">
                             </div>
                         </a> 
                         <div class="gg">
-                            <a class="hh" href="/product/viewDetail.do?pd_id=${list.pdId}">${list.brandName}</a>
+                            <a class="hh" href="/product/viewDetail.do?pd_id=${list.pdId}&large_ctgr_id=${list.largeCtgrId}">${list.brandName}</a>
                             <a title="${list.pdName}">
                                 <div class="j">
                                     <h5 class="jj">${list.pdName} (10 Color)</h5>
@@ -149,13 +149,13 @@ $(document).ready(function() {
                     $(".photo_list").append(`
                         <li class="photo1">
                             <div class="cc">
-                                <a href="/product/viewDetail.do?pd_id=\${element.pdId}">
+                                <a href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">
                                     <div class="dd">
                                         <img alt="" src="\${element.pdImageUrl}" class="ff">
                                     </div>
                                 </a>
                                 <div class="gg">
-                                    <a class="hh" href="/product/viewDetail.do?pd_id=\${element.pdId}">\${element.brandName}</a>
+                                    <a class="hh" href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">\${element.brandName}</a>
                                     <a title="${element.pdName}">
                                         <div class="j">
                                             <h5 class="jj">\${element.pdName} (10 Color)</h5>
@@ -214,13 +214,13 @@ $(document).ready(function() {
                     $(".photo_list").append(`
                         <li class="photo1">
                             <div class="cc">
-                                <a href="/product/viewDetail.do?pd_id=\${element.pdId}">
+                                <a href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">
                                     <div class="dd">
                                         <img alt="" src="\${element.pdImageUrl}" class="ff">
                                     </div>
                                 </a>
                                 <div class="gg">
-                                    <a class="hh" href="/product/viewDetail.do?pd_id=\${element.pdId}">\${element.brandName}</a>
+                                    <a class="hh" href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">\${element.brandName}</a>
                                     <a title="\${element.pdName}">
                                         <div class="j">
                                             <h5 class="jj">\${element.pdName} (10 Color)</h5>

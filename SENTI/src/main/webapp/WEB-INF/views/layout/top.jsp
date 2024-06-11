@@ -591,7 +591,7 @@ button {
          <div class="head-main1">
             <div class="head-main1">
                <div class="logo">
-                  <a class="logo-main" href="/sentiBoard/main.jsp">29CM</a>
+                  <a class="logo-main" href="/main.do">29CM</a>
                   <ul class="menu-box">
                      <li class="my-page1">
                         <a class="my-page2" href="/product/productRegister.do">
@@ -662,8 +662,10 @@ button {
             </nav>
             <div class="bottom">
                <ul class="bot-ul">
-                  <li class="bot-li"><a class="bot-a"
-                     href="https://shop.29cm.co.kr/best-items">BEST</a></li>
+                  <li class="bot-li">
+                  <a class="bot-a"
+                     href="#">BEST</a>
+                   </li>
                   <li class="bot-li">
                      <div class="div-ctgr">WOMEN</div>
                   </li>

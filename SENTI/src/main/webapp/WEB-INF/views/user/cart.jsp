@@ -86,16 +86,16 @@
 								</div>
 								<div class="bot-info1">
 									<div class="bot-item-info">
-										<a href="/product/viewDetail.do?pd_id=${list.pdId }">
+										<a href="/product/viewDetail.do?pd_id=${list.pdId }&large_ctgr_id=${list.largeCtgrId}">
 											<img class="item-img" src="${list.pdImageURL }" alt="${list.pdName }" loading="lazy"/>
 										</a>
 										<div class="item-img-info">
 											<div translate="no">
-												<a class="item-brand" href="/product/viewDetail.do?pd_id=${list.pdId }">${list.brandName }
+												<a class="item-brand" href="/product/viewDetail.do?pd_id=${list.pdId }&large_ctgr_id=${list.largeCtgrId}">${list.brandName }
 													<input type="hidden" value="${list.pdId }" />
 												</a>
 											</div>
-											<a id="item-title" class="item-title" href="/product/viewDetail.do?pd_id=${list.pdId }">${list.pdName }</a>
+											<a id="item-title" class="item-title" href="/product/viewDetail.do?pd_id=${list.pdId }&large_ctgr_id=${list.largeCtgrId}">${list.pdName }</a>
 											<div class="item-price">
 												<span class="price">
 												 	<fmt:formatNumber pattern="##,###" value="${list.pdPrice }" />원
