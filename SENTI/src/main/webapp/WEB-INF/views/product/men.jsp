@@ -98,7 +98,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 		       									<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
 		       										viewBox="0 0 20 20" class="bi-suit-heart-fill">
 		       										<path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
-		       										fill="" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5"></path>
+		       										fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
 		       									</svg>
 	       									</c:if>
 
