@@ -19,6 +19,7 @@ public interface BoardMapper {
 	List<BoardVO> selectBylargeCtgrId(int largeCtgrId);
 	List<BoardVO> iRead(int pd_id);
 	BoardVO lRead(int large_ctgr_id);
+	List<BoardVO> oRead(int large_ctgr_id);
 	
 	
 	/*
