@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.doit.senti.mapper.ReviewMapper">
+  <!-- public List<ReviewVO> getReviews(int pdId) throws ClassNotFoundException, SQLException; -->
+  <select id="getReviews" resultType="ReviewVO">
+    SELECT member_id, review_date, review_content, image_url
+    FROM review r JOIN pay p ON r.pay_id = p.pay_id
+    WHERE p.pd_id = #{pd_id}
+  </select>
+  
+  <!-- public int reviewCount(int pdId) throws ClassNotFoundException, SQLException; -->
+  <select id="reviewCount" resultType="int">
+    SELECT COUNT(*)
+    FROM review r JOIN pay p ON r.pay_id = p.pay_id
+    WHERE pd_id = #{pd_id}
+  </select>
+  
+  <!-- public int reviewInsert(ReviewVO review) throws ClassNotFoundException, SQLException; -->
+  <insert id="reviewInsert">
+    INSERT review 
+  </insert>
+  
+  <!-- public int reviewUpdate(ReviewVO review)throws ClassNotFoundException, SQLException; -->
+  <update id="reviewUpdate">
+    UPDATE review 
+    SET review_content = #{reviewContent}, review_date = SYSDATE
+       <if test="imageUrl != null">
+         , image_url = #{imageUrl}
+       </if>
+    WHERE pay_id = #{payId}
+  </update>
+  
+  <!-- public int reviewDelete(int payId)throws ClassNotFoundException, SQLException; -->
+  <delete id="reviewDelete">
+    DELETE review
+    WHERE pay_id = #{pd_id}
+  </delete>
+  
+</mapper>
+ 

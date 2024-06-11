@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+                           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-    <!-- 에러 : spring-security-4.2.xsd 수정. -->	
-	 		
-	<security:http pattern="/static/**" security="none"></security:http>	
-	<security:http pattern="/design/**" security="none"></security:http>	
-	
-	<security:http> 
-	   <security:form-login/>  
-	</security:http>	
-	
-	<security:authentication-manager> 
-	</security:authentication-manager>
+    <!-- Static resources exclusion -->
+    <security:http pattern="/static/**" security="none"/>
+    <security:http pattern="/design/**" security="none"/>
+    <security:http pattern="/css/**" security="none"/>
+    <security:http pattern="/js/**" security="none"/>
 
+    <security:http use-expressions="true">
+        <!-- URL 패턴에 대한 권한 설정 -->
+        <security:intercept-url pattern="/signUp/login.htm" access="permitAll"/>
+        <security:intercept-url pattern="/signUp/logout.htm" access="permitAll"/>
+        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+
+        <!-- 커스텀 로그인 페이지 -->
+        <security:form-login login-page="/signUp/login.htm"
+                             login-processing-url="/j_spring_security_check"
+                             username-parameter="j_username"
+                             password-parameter="j_password"
+                             authentication-failure-url="/signUp/login.htm?error=true"
+                             default-target-url="/main.do"
+                             always-use-default-target="true"/>
+
+        <!-- 로그아웃 설정 -->
+        <security:logout logout-url="/signUp/logout.htm"
+                         invalidate-session="true"
+                         logout-success-url="/"/>
+    </security:http>
+
+    <!-- PasswordEncoder -->
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!-- 인증 관리자 설정 -->
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="loginUserDetailsService">
+            <security:password-encoder ref="bCryptPasswordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!-- UserDetailsService -->
+    <bean id="loginUserDetailsService" class="org.doit.senti.domain.security.LoginUserDetailsService"/>
 </beans>

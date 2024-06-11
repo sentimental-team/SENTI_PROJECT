@@ -124,6 +124,7 @@ WHERE
 		<select id="pDetail" resultType="org.doit.senti.domain.board.BoardVO">		
 	
  SELECT
+ 	p.pd_id,
     p.pd_name,
     p.pd_price,
     p.pd_discount_rate,
@@ -142,6 +143,7 @@ FROM
 WHERE
     p.pd_id = #{pd_id}
 GROUP BY
+	p.pd_id,
     p.pd_name,
     p.pd_price,
     p.pd_discount_rate,

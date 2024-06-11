@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 public class CartDTO {
 	
 	// insert
-	private int memberId;
+	private String memberId;
 	private int pdId;
-	private int cnt; //수량
 	
 	//getCart
 	private String pdName;
@@ -20,8 +19,9 @@ public class CartDTO {
 	private String brandName;
 	private int pdPrice;
 	private int pdDiscountRate;
-	private String testOption;
+	private String selectOption;
 	private int deliPay;
+	private int stock;
 	
 	//deleteCart
 	private int cartId;

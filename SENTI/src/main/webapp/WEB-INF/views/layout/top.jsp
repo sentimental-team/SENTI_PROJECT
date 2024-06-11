@@ -387,7 +387,7 @@ button {
    position: relative;
    display: inline-block;
    font-weight: 600;
-   color: #000000;
+   color: #000000 !important;
    border-bottom: 5px solid transparent;
 }
 
@@ -436,7 +436,7 @@ button {
    padding: 6px 0;
    font-size: 16px;
    font-weight: 600;
-   color: #000000;
+   color: #000000 !important;
    border-bottom: 4px solid transparent;
 }
 
@@ -474,7 +474,7 @@ button {
     padding: 9px 0px;
     /* width: 180px; */
     margin-right: 100px;
-    color: black;
+    color: black !important;
     font-size: 13px;
 }
 .categoryM {
