@@ -206,7 +206,7 @@ public class ProductController {
 
 	
 	@GetMapping("/viewDetail.do")
-	public String viewDetail(HttpSession session, Model model,@RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
+	public String viewDetail(HttpSession session, Model model,@RequestParam("large_ctgr_id") int large_ctgr_id, @RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
 		System.out.println(">>>>>> pd_id : "+ pd_id);
 		
 		log.info("> BoardController2.list()...");
@@ -215,6 +215,8 @@ public class ProductController {
 		model.addAttribute("iDetail", this.boardService.getInfoImage(pd_id));
 		model.addAttribute("reviewCount", this.reviewMapper.reviewCount(pd_id));
 		model.addAttribute("reviews", this.reviewMapper.getReviews(pd_id));
+		model.addAttribute("oDetail", this.boardService.getOption(large_ctgr_id));
+		
 		
 		return "product/viewDetail.jsp";  
 	}	

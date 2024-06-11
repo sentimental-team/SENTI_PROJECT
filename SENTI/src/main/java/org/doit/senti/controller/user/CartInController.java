@@ -69,7 +69,11 @@ public class CartInController {
 	
 	// 주문 페이지로 이동
 	@GetMapping("/order.do")
-	public String order(HttpSession httpSession) throws Exception{
+	public String order(Model model) throws Exception{
+		
+		List<CartDTO> list = this.cartMapper.getCart(); 
+		
+		model.addAttribute("list", list);
 		
 		return "/user/order.jsp";
 	}

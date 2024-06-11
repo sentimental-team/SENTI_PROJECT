@@ -45,7 +45,8 @@ public class BoardVO {
 	private int pdLikeCount;
 	private int likeCheck;
 
-	
+	//
+	private String selectOption;
 	
 }
 
