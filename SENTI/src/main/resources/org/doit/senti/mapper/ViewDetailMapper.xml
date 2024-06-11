@@ -7,8 +7,8 @@
 
 	<!-- 장바구니 추가 -->
 	<insert id="insertCart" parameterType="CartDTO">
-		INSERT INTO CART (cart_id, member_id, pd_id, test_option, stock)
-		VALUES (seq_cart_id.NEXTVAL, 1, #{pdId}, 'test', 1)
+		INSERT INTO CART (cart_id, member_id, pd_id, select_option, stock)
+		VALUES (seq_cart_id.NEXTVAL, 'yujin@naver.com', #{pdId}, 'dummyOption', 1)
 	</insert>	
 	
 </mapper>
