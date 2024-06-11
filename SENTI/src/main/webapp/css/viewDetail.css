@@ -525,7 +525,7 @@
         margin-left: 14px;
     }
     a:-webkit-any-link {
-        color: black;
+        color: -webkit-link;
         cursor: pointer;
     }
     .css-1dncbyk {
@@ -2363,7 +2363,7 @@
         outline: none;
     }
     a:-webkit-any-link {
-        color:black;
+        color: -webkit-link;
         cursor: pointer;
     }
     .css-1dmv4kt {
@@ -3979,4 +3979,20 @@
     overflow: hidden;
   }
 
+  .css-1bb02to {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    line-height: 26px;
+    text-align: center;
+    font-weight: normal;
+  }
+   .css-1t6iktd {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 140px;
+    border-bottom: 1px solid rgb(212, 212, 212);
+  }
    

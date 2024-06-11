@@ -1,6 +1,7 @@
 package org.doit.senti.controller.board;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.doit.senti.domain.board.ProductImageDTO;
 import org.doit.senti.domain.board.ProductRegisterDTO;
 import org.doit.senti.mapper.ProductRegisterMapper;
+import org.doit.senti.mapper.ReviewMapper;
 import org.doit.senti.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +38,8 @@ public class ProductController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private ReviewMapper reviewMapper;
 	
 
 
@@ -163,14 +167,15 @@ public class ProductController {
 	}
 	
 	@GetMapping("/viewDetail.do")
-	public String viewDetail(HttpSession session, Model model,@RequestParam("pd_id") int pd_id ) {
+	public String viewDetail(HttpSession session, Model model,@RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
 		System.out.println(">>>>>> pd_id : "+ pd_id);
 		
 		log.info("> BoardController2.list()...");
 		
 		model.addAttribute("pDetail", this.boardService.get(pd_id));
 		model.addAttribute("iDetail", this.boardService.getInfoImage(pd_id));
-		
+		model.addAttribute("reviewCount", this.reviewMapper.reviewCount(pd_id));
+		model.addAttribute("reviews", this.reviewMapper.getReviews(pd_id));
 		
 		return "product/viewDetail.jsp";  
 	}	

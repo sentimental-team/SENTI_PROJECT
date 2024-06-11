@@ -209,7 +209,9 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                         </path>
                                     </svg><span class="css-17mseqq e1xxmqg32">찜하기</span></button></div>
                         </div>
-                        <div class="css-1ilqvfb e1k6f1kl0">
+                        <c:choose>
+                          <c:when test="${ not empty reviews }">
+                           <div class="css-1ilqvfb e1k6f1kl0">
                             <div class="css-nbg1jm e1k6f1kl1">
                                 <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="10" height="10"
@@ -272,8 +274,14 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                                     d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
                                                 </path>
                                             </svg></i></i></div>
-                            </div><button type="button" class="css-mfscko e1k6f1kl2">${rDetail.reviewCount}개 리뷰 보기</button>
+                            </div><button type="button" class="css-mfscko e1k6f1kl2">${ reviewCount }개 리뷰 보기</button>
                         </div>
+                          </c:when>
+                          <c:otherwise>
+                            <div style="margin: 20px"></div>
+                          </c:otherwise>
+                        </c:choose>
+                        
                         <div class="css-lcoy4n ek83fdm7">
                             <div class="css-1rr4qq7 ejuizc30">
                                 <p class="css-1bci2fm ejuizc31">${pDetail.pdPrice}</p>
@@ -450,7 +458,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         <section class="e5a7l9l6 css-1w043rb egmjvu30">
             <div class="css-rpfdd0 egmjvu31">
                 <div class="css-70qvj9 egmjvu34">
-                    <h2 class="css-rrzi56 egmjvu32">리뷰 <span class="css-1f0l480 egmjvu33">(966)</span></h2>
+                    <h2 class="css-rrzi56 egmjvu32">리뷰 <span class="css-1f0l480 egmjvu33">(${ reviewCount })</span></h2>
                     <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg xmlns="http://www.w3.org/2000/svg"
                                 width="14.4" height="14.4" viewBox="0 0 13 12">
                                 <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
@@ -507,31 +515,32 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 <button class="reviewWrite" type="button">REVIEW쓰기</button>
 			</div>
 			<!-- --------------------------------------------------------------------------------------------------------------- -->
-					<form action="/review.do" method="post">
+					<form action="/viewDetail/review.do" method="post" enctype="multipart/form-data">
 					<div class="reviewBox">
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">아이디</h2>
 						<div class="reviewSquare">
-							<span class="reviewID">dltldms0315@naver.com</span>
+							<span class="reviewID" >admin2@naver.com</span>
+							<!-- <input name="memberId" class="reviewID"> -->
 						</div>
 					</div>
 					<div class="reviewMbox">
-						<h2 class="reviewSbox">상품옵션</h2>
+						<h2 class="reviewSbox">상품별점</h2>
 						<div class="reviewSquare">
-							<span class="reviewID">[옵션]:어쩌구</span>
+							<span class="reviewID">별점 어케 줌,,</span>
 						</div>
 					</div>
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">리뷰내용</h2>
 						<div class="reviewSquare">
 							<textarea rows="5" placeholder="리뷰는 최소 5자 이상 입력해 주세요."
-								class="reviewText"></textarea>
+								class="reviewText" name="reviewContent"></textarea>
 						</div>
 					</div>
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">사진첨부</h2>
 						<div class="reviewSquare">
-							<input type="file" accept="image/*" multiple="" class="imageInput">
+							<input type="file" accept="image/*" multiple="" class="imageInput" name="file">
 							<button class="imageButton"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" color="onColor" class="imageButton2"><path d="M13 3H11V11H3V13H11V21H13V13H21V11H13V3Z" fill="white"></path></svg></button>
 						</div>
 					</div>
@@ -558,96 +567,30 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 				</div>
 				</form>
 				<!-- ------------------------------------------------------------------------------------------------------- -->
-            <div class="css-12192rx e1l0bx3l0">
-                <div class="css-ruapjk ef5b6hc0">
+            
+                <c:choose>
+                  <c:when test="${ not empty reviews }">
+                    <div class="css-12192rx e1l0bx3l0">
+                    <div class="css-ruapjk ef5b6hc0">
                     <div class="splide splide--slide splide--ltr splide--draggable is-active is-initialized" id="splide06"
                         role="region" aria-roledescription="carousel">
                         <div class="splide__track splide__track--slide splide__track--ltr splide__track--draggable"
                             id="splide06-track" aria-live="polite" aria-relevant="additions"
                             style="padding-left: 40px; padding-right: 40px;">
                             <ul class="splide__list" id="splide06-list" role="presentation" style="transform: translateX(0px);">
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-active is-visible" id="splide06-slide01"
+                    <c:forEach items="${ reviews }" var="reviews">
+                      <li class="splide__slide css-y4wdi3 ef5b6hc10 is-active is-visible" id="splide06-slide01"
                                     role="group" aria-roledescription="slide" aria-label="1 of 31"
                                     style="margin-right: 10px; width: 120px; height: 120px;">
                                     <div class="css-uwwqev ef5b6hc1">
                                         <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/05/08/ce813796ae2f409bacf9363a01a4914d_20240508211134.jpeg?width=120"
+                                                src="${ reviews.imageUrl }"
                                                 alt="" class="css-n8h1i5 ef5b6hc3"></div>
                                     </div>
                                 </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible is-next" id="splide06-slide02"
-                                    role="group" aria-roledescription="slide" aria-label="2 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/05/06/37f38c0d8c484114821f6b077eb26de2_20240506185513.jpeg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible" id="splide06-slide03" role="group"
-                                    aria-roledescription="slide" aria-label="3 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/05/06/f5c6a1b5b1e44da3ab8b831e46227b8d_20240506095317.jpeg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible" id="splide06-slide04" role="group"
-                                    aria-roledescription="slide" aria-label="4 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/28/c215b4a888a44335b1758202b8b43df1_20240428234824.jpeg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible" id="splide06-slide05" role="group"
-                                    aria-roledescription="slide" aria-label="5 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/14/c62fa56e532f436c8977795ba8a9eab2_20240414124026.jpg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible" id="splide06-slide06" role="group"
-                                    aria-roledescription="slide" aria-label="6 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/12/79e5b664a6254a97a87955d679f36992_20240412133912.jpeg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10 is-visible" id="splide06-slide07" role="group"
-                                    aria-roledescription="slide" aria-label="7 of 31"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/11/4b1567d0266e47de97cd4c2627cb2bb4_20240411062452.jpg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10" id="splide06-slide08" role="group"
-                                    aria-roledescription="slide" aria-label="8 of 31" aria-hidden="true"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/11/d58ea716d1fe4dffa4eb31c264c9a26f_20240411062458.jpg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                <li class="splide__slide css-y4wdi3 ef5b6hc10" id="splide06-slide09" role="group"
-                                    aria-roledescription="slide" aria-label="9 of 31" aria-hidden="true"
-                                    style="margin-right: 10px; width: 120px; height: 120px;">
-                                    <div class="css-uwwqev ef5b6hc1">
-                                        <div class="css-rxshk0 ef5b6hc2"><img
-                                                src="https://img.29cm.co.kr/next-product/2024/04/10/d3a4564d7e9a41d2a8807c70ad5e91b8_20240410214130.jpg?width=120"
-                                                alt="" class="css-n8h1i5 ef5b6hc3"></div>
-                                    </div>
-                                </li>
-                                
+                    
+                    </c:forEach>
+                                      
                             </ul>
                         </div>
                         <div class="splide__arrows css-13o7eu2 ef5b6hc4 splide__arrows--ltr"><button
@@ -665,10 +608,11 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                         stroke-width="5"></path>
                                 </svg></button></div>
                     </div>
-                </div>
-            </div>
-            <div class="css-0 e13i1jpn0">
+                  </div>
+               </div>
+                <div class="css-0 e13i1jpn0">
                 <ul class="css-0 e13i1jpn1">
+               <c:forEach items="${ reviews }" var="reviews">
                     <li class="css-0 e13i1jpn2">
                         <div class="css-100fusk e1eysicp2">
                             <hr class="css-tshtjw e1eysicp22">
@@ -724,317 +668,29 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                                     <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
                                                         d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
                                                     </path>
-                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">dia******</span><span
-                                        class="css-1riowxi e1eysicp6">2024.05.06</span>
+                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">${ reviews.memberId }</span><span
+                                        class="css-1riowxi e1eysicp6">${ reviews.reviewDate }</span>
                                 </div>
                                 <div class="css-16tn2ye e1eysicp7">
                                     <div class="css-31l7gp e1eysicp1">
                                         <div class="css-4oetsc e1eysicp9">
-                                            <div class="css-nn803e ee2s9060"><span class="css-rlwyr0 ee2s9061">옵션 : </span><span
-                                                    class="css-wle0cx ee2s9062">[향기]코튼온 / Cotton On</span></div>
                                         </div>
-                                        <p class="css-1gk1nxz e1eysicp8">남자친구한테 선물해줬어요
-                                            남자친구가 넘 마음에 든다면서, 돌 아깝다고 반만 채웠다고 해서 사진 상으론 돌이 적어보이는 거 참고해주세요.
-                                            무튼 투룸인데 집에 들어가면 요 향이 은은하게 차있어요
-                                            제가 향에 민감한데, 이건 머리 아픈 향이 아니라 아주 좋드라구요! 인테리어 효과도 있구요, 선물하기에도 좋은 패키징이라 아주아주 마음에 들었어요!
-                                            제발 시트러스나 라임계열의 향도 만들어주세요.</p>
+                                        <p class="css-1gk1nxz e1eysicp8">${ reviews.reviewContent }</p>
                                     </div>
                                     <div class="css-1jjxju6 e1eysicp0"><img
-                                            src="https://img.29cm.co.kr/next-product/2024/05/06/37f38c0d8c484114821f6b077eb26de2_20240506185513.jpeg?width=120"
+                                            src="${ reviews.imageUrl }"
                                             loading="lazy" alt="리뷰 이미지" class="css-18bdumj e1eysicp15"></div>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    
-                    <li class="css-0 e13i1jpn2">
-                        <div class="css-100fusk e1eysicp2">
-                            <hr class="css-tshtjw e1eysicp22">
-                            <div class="css-4g6ai3 e1eysicp3">
-                                <div class="css-69znzl e1eysicp4">
-                                    <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">da0***</span><span
-                                        class="css-1riowxi e1eysicp6">2024.05.02</span>
-                                </div>
-                                <div class="css-16tn2ye e1eysicp7">
-                                    <div class="css-31l7gp e1eysicp1">
-                                        <div class="css-4oetsc e1eysicp9">
-                                            <div class="css-nn803e ee2s9060"><span class="css-rlwyr0 ee2s9061">옵션 : </span><span
-                                                    class="css-wle0cx ee2s9062">[향기]코튼온 / Cotton On</span></div>
-                                        </div>
-                                        <p class="css-1gk1nxz e1eysicp8">선물했는데 받는 사람도 너무 만족해했습니다</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="css-0 e13i1jpn2">
-                        <div class="css-100fusk e1eysicp2">
-                            <hr class="css-tshtjw e1eysicp22">
-                            <div class="css-4g6ai3 e1eysicp3">
-                                <div class="css-69znzl e1eysicp4">
-                                    <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">ili*******</span><span
-                                        class="css-1riowxi e1eysicp6">2024.04.29</span>
-                                </div>
-                                <div class="css-16tn2ye e1eysicp7">
-                                    <div class="css-31l7gp e1eysicp1">
-                                        <div class="css-175ywfd e1eysicp11"><span class="css-imikhc e1eysicp12">선물리뷰</span>
-                                        </div>
-                                        <div class="css-4oetsc e1eysicp9">
-                                            <div class="css-nn803e ee2s9060"><span class="css-rlwyr0 ee2s9061">옵션 : </span><span
-                                                    class="css-wle0cx ee2s9062">[향기]오리엔탈패츌리 / Oriental Patcholli</span></div>
-                                        </div>
-                                        <p class="css-1gk1nxz e1eysicp8">친구에게 선물 했는데 너무 마음에 든다고 하더라고요. 깔끔해서 좋대요. 저도 선물로 주고 뿌듯
-                                            했어요. </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="css-0 e13i1jpn2">
-                        <div class="css-100fusk e1eysicp2">
-                            <hr class="css-tshtjw e1eysicp22">
-                            <div class="css-4g6ai3 e1eysicp3">
-                                <div class="css-69znzl e1eysicp4">
-                                    <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">inc*****</span><span
-                                        class="css-1riowxi e1eysicp6">2024.04.28</span>
-                                </div>
-                                <div class="css-16tn2ye e1eysicp7">
-                                    <div class="css-31l7gp e1eysicp1">
-                                        <div class="css-4oetsc e1eysicp9">
-                                            <div class="css-nn803e ee2s9060"><span class="css-rlwyr0 ee2s9061">옵션 : </span><span
-                                                    class="css-wle0cx ee2s9062">[향기]그라시플라워 / Grassy Flower</span></div>
-                                        </div>
-                                        <p class="css-1gk1nxz e1eysicp8">지인 집들이 선물로 딱인거 같아요!!! 향 호불호로 선택하기가 쉽진않았지만 집들이 선물로는 정말
-                                            최고인듯</p>
-                                    </div>
-                                    <div class="css-1jjxju6 e1eysicp0"><img
-                                            src="https://img.29cm.co.kr/next-product/2024/04/28/c215b4a888a44335b1758202b8b43df1_20240428234824.jpeg?width=120"
-                                            loading="lazy" alt="리뷰 이미지" class="css-18bdumj e1eysicp15"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="css-0 e13i1jpn2">
-                        <div class="css-100fusk e1eysicp2">
-                            <hr class="css-tshtjw e1eysicp22">
-                            <div class="css-4g6ai3 e1eysicp3">
-                                <div class="css-69znzl e1eysicp4">
-                                    <div class="css-18biwo e1piy9l40"><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i><i class="css-9nop8 e1piy9l41"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 13 12">
-                                                <path fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
-                                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                </path>
-                                            </svg><i class="css-neyd9i e1piy9l42"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="10" height="10" viewBox="0 0 13 12">
-                                                    <path fill="#000000" fill-rule="evenodd" stroke="#000000" stroke-width="0.7"
-                                                        d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
-                                                    </path>
-                                                </svg></i></i></div><span class="css-5030pi e1eysicp5">sej*******</span><span
-                                        class="css-1riowxi e1eysicp6">2024.04.28</span>
-                                </div>
-                                <div class="css-16tn2ye e1eysicp7">
-                                    <div class="css-31l7gp e1eysicp1">
-                                        <div class="css-4oetsc e1eysicp9">
-                                            <div class="css-nn803e ee2s9060"><span class="css-rlwyr0 ee2s9061">옵션 : </span><span
-                                                    class="css-wle0cx ee2s9062">[향기]오리엔탈패츌리 / Oriental Patcholli</span></div>
-                                        </div>
-                                        <p class="css-1gk1nxz e1eysicp8">예뻐서 그냥 놔도 좋네요 오일 떨어트리면 향이 은은하게 번져서 너무 좋아요</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                    </c:forEach>
+                    <!-- ---------------------  페이징 처리 ----------------------  -->
+                   </ul>
+                 </div>
+                 <div >
+                 </div>
+            
                 <div class="e13i1jpn4 css-1oq0g9s ej7aofc0">
                     <button type="button" class="css-129gw94 ej7aofc3"><svg class="ej7aofc5 css-11r31mh e1xecdd00"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 80">
@@ -1066,7 +722,20 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                             </path>
                         </svg><span class="css-17mseqq ej7aofc7">다음 페이지</span></button>
                 </div>
-            </div>
+            </div>   
+                 </c:when>
+                  <c:otherwise>
+                    <div class="css-12192rx e1l0bx3l0">
+                     <div class="css-ruapjk ef5b6hc0">
+                     <div class="css-1t6iktd">
+                     <p class="css-1bb02to ek63ltp1">이 상품의 첫번째 리뷰를 작성해보세요.<br>리뷰 작성시 최대 1,500 point를 드립니다.</p>
+                     </div>
+                     </div>
+                     </div>
+                  </c:otherwise>
+                </c:choose> 
+                </section>
+                
         </section>
         <section class="e5a7l9l7 css-f18qjw e1l19miw0">
             <div class="css-3sj7fp e1l19miw2">
