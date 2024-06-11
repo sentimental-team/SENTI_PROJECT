@@ -591,7 +591,7 @@ button {
          <div class="head-main1">
             <div class="head-main1">
                <div class="logo">
-                  <a class="logo-main" href="/sentiBoard/main.jsp">29CM</a>
+                  <a class="logo-main" href="/main.do">29CM</a>
                   <ul class="menu-box">
                      <li class="my-page1">
                         <a class="my-page2" href="/product/productRegister.do">

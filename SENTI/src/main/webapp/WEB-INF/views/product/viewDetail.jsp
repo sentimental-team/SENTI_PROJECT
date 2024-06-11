@@ -5,6 +5,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
+<title>감도 깊은 취향 셀렉트샾 29CM</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="http://localhost/jspPro/images/SiSt.ico">
@@ -357,13 +358,12 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                             <div id="option1" class="ed3wcbu1 css-1rhyn18 e15gsm0h0">
                                 <div  id="" role="button" class="css-79elbk e15gsm0h3">
                                 <%-- <input id="option2"  value="${pDetail.largeCtgrId }"  class="e15gsm0h1 css-qmbng6 e1u1pays0"  placeholder="향기" autocapitalize="none" type="text" readonly="" value=""> --%>
-                                	<select class="e15gsm0h1 css-qmbng6 e1u1pays0">
+                                	<select class="e15gsm0h1 css-qmbng6 e1u1pays0 select-option">
                                 		<!-- option -->
-                                		<option>옵션을 선택해주세요.</option>
+                                		<option value="no">옵션을 선택해주세요.</option>
 									        <c:forEach items="${oDetail}" var="item">
 									            <option value="${item.pdOptionName}">${item.pdOptionName}</option>
 									        </c:forEach>
-									    
                                 	</select>
                                <!--  <svg class="e15gsm0h2 css-cs4h3q e11s8l6m0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 16">
                                         <g class="select_option1" fill="none" fill-rule="evenodd" stroke="rgb(212, 212, 212)" stroke-width="3">
@@ -979,17 +979,24 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 </body>
 <script>
-	$(document).ready(function(){
-	    $(".cartbtn").on("click", function(event){
-	        event.preventDefault();
-	
+$(document).ready(function() {
+    $(".cartbtn").on("click", function(event) {
+
+        let selectOption = $(".select-option").val();
+        if (selectOption === "no") {
+            alert("옵션을 선택해주세요.");
+            event.preventDefault();
+        } else {
+        	console.log("선택된 옵션값 : " + selectOption)
 	        let confirmCart = confirm("장바구니에 추가 하시겠습니까?");
-	
+	        
 	        if (confirmCart) {
 	            let pdId = $(this).data('pdid'); // data-pdId 속성에서 제품 ID를 가져옴
+	            selectOption = $(".select-option").val();
 	
 	            let cartDTO = {
-	                pdId: pdId
+	                pdId: pdId,
+	                selectOption: selectOption
 	            };
 	
 	            $.ajax({
@@ -998,16 +1005,24 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	                contentType: "application/json",
 	                data: JSON.stringify(cartDTO),
 	                success: function(response) {
-	                        alert("상품이 장바구니에 추가되었습니다.");
+	                    alert("상품이 장바구니에 추가되었습니다.");
 	                    
+	                    let confirmMove = confirm("장바구니로 이동하시겠습니까 ?");
+	                    
+	                    if (confirmMove) {
+	                        location.href = "/user/cart.do";
+	                    } else {
+	                        event.preventDefault();
+	                    } 
 	                },
 	                error: function() {
 	                    alert("오류가 발생했습니다.");
 	                }
 	            });
 	        }
-	    });
-	});
+        }
+    });
+});
 	
 	// 리뷰 쓰기 누르면 리뷰 쓰는창 뜨기
 	$(".reviewWrite").on("click",function(){
