@@ -21,7 +21,7 @@
   
   <update id="insertProductImgInfo">
 	  UPDATE product_image
-	  SET pd_info_image_url = #{pdInfoImageUrl} , pd_image_info_uuid = #{pdImageInfoUuid}
+	  SET pd_info_image_url = #{pdInfoImageUrl, jdbcType=VARCHAR} , pd_image_info_uuid = #{pdImageInfoUuid, jdbcType=VARCHAR}
 	  WHERE pd_id = (SELECT MAX(pd_id) FROM product_image)
   </update>
   

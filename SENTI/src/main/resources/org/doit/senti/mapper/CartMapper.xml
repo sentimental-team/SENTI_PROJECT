@@ -19,7 +19,7 @@
         WHERE m.member_id = #{memberId}
          -->
         
-		SELECT m.member_id, pd_name, select_option, brand_name, pd_price, pd_image_url, deli_pay, cart_id, stock, pd_id
+		SELECT m.member_id, pd_name, select_option, brand_name, pd_price, pd_image_url, deli_pay, cart_id, stock, pd_id, lc.large_ctgr_id
 		FROM cart c JOIN member m ON c.member_id = m.member_id
             JOIN product p ON p.pd_id = c.pd_id
             JOIN brand b ON b.brand_id = p.brand_id

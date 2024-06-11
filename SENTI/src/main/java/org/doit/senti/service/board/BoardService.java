@@ -26,4 +26,6 @@ public interface BoardService {
 
 	List<BoardVO> getOption(int large_ctgr_id);
 	
+
+	
 }
