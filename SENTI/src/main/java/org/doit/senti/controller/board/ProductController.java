@@ -195,9 +195,9 @@ public class ProductController {
 	    	 product.setPdLikeCount(likeCount);
 	    	 
 	    	 int reviewCnt = reviewMapper.reviewCount(product.getPdId());
-	    	 //int reviewAvg = reviewMapper.reviewAverage(product.getPdId());
+	    	 int reviewAvg = reviewMapper.reviewAverage(product.getPdId());
 	    	 
-	    	 //product.setReviewAvg(reviewAvg);
+	    	 product.setReviewAvg(reviewAvg);
 	    	 product.setReviewCnt(reviewCnt);
 	     }
 
