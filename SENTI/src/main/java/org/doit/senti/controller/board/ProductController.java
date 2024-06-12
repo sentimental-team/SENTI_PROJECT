@@ -114,7 +114,7 @@ public class ProductController {
 
 					File dest1 = new File(uploadRealPath, fileSystemname);
 					pdImage.transferTo(dest1);
-					pdImageDTO.setPdImageUrl(fileSystemname);
+					pdImageDTO.setPdImageUrl("../upload/" + fileSystemname);
 					pdImageDTO.setPdImageUuid(uploadRealPath);
 					
 					rowCount = this.productRegister.insertProductImg(pdImageDTO);
@@ -139,7 +139,7 @@ public class ProductController {
 
 				File dest2 = new File(uploadRealPath2, InfofileSystemname);
 				pdInfoImage.transferTo(dest2);
-				pdImageDTO.setPdInfoImageUrl(InfofileSystemname);
+				pdImageDTO.setPdInfoImageUrl("../upload/" + InfofileSystemname);
 				pdImageDTO.setPdImageInfoUuid(uploadRealPath2);
 				
 
@@ -194,11 +194,16 @@ public class ProductController {
 	    	 product.setLikeCheck(result);
 	    	 product.setPdLikeCount(likeCount);
 	    	 
+<<<<<<< HEAD
+	    	 
+	    	 
+=======
 	    	 int reviewCnt = reviewMapper.reviewCount(product.getPdId());
 	    	 //int reviewAvg = reviewMapper.reviewAverage(product.getPdId());
 	    	 
 	    	 //product.setReviewAvg(reviewAvg);
 	    	 product.setReviewCnt(reviewCnt);
+>>>>>>> ae4179a0b529a6d09c4739046fdc1516d171e2cf
 	     }
 
 	      model.addAttribute("mList",this.boardService.mList(large_ctgr_id));

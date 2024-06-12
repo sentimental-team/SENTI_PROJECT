@@ -1,4 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="UTF-8"><head><style class="vjs-styles-defaults">
       .video-js {
         width: 300px;
@@ -85,7 +87,7 @@
                 <ui-left-nav _ngcontent-yow-c77="" _nghost-yow-c51="" class="ng-star-inserted">
 	<section _ngcontent-yow-c51="" class="my_my">
   	<div _ngcontent-yow-c51="" class="my_myin">
-    <h3 _ngcontent-yow-c51="">김*성</h3>
+    <h3 _ngcontent-yow-c51="">${memberName}</h3>
 
         
       <div _ngcontent-yow-c51="" class="ico_wrap">
@@ -97,7 +99,7 @@
  		  </ruler-svg-icon-heart>
         </span>
       </div>
-   <span _ngcontent-yow-c51="" class="txt">좋아요 </span> <em _ngcontent-yow-c51="">1</em>
+   <span _ngcontent-yow-c51="" class="txt">좋아요 </span> <em _ngcontent-yow-c51="">${likeCount }</em>
 
   </div>
 </section>
@@ -225,43 +227,41 @@
                 <div _ngcontent-yow-c199="" class="large_tab">
     <ul _ngcontent-yow-c199="">
         <li _ngcontent-yow-c199="" class="ng-star-inserted">
-            <a _ngcontent-yow-c199="" href="#" class="active">PRODUCT<span>(1)</span></a>
-        </li><li _ngcontent-yow-c199="" class="ng-star-inserted">
-            <a _ngcontent-yow-c199="" href="#">BRAND<span>(0)</span></a>
-        </li><li _ngcontent-yow-c199="" class="ng-star-inserted">
-            <a _ngcontent-yow-c199="" href="#">POST<span>(0)</span></a>
-        </li><!---->
+            <a _ngcontent-yow-c199="" href="#" class="active">PRODUCT<span>(${likeCount })</span></a>
+        </li>
     </ul>
 </div>
 </ruler-large-tab>
-<router-outlet _ngcontent-yow-c200=""></router-outlet><ui-heart-product _nghost-yow-c164="" class="ng-star-inserted"><div _ngcontent-yow-c164="" class="product_content ng-star-inserted">
+<router-outlet _ngcontent-yow-c200=""></router-outlet><ui-heart-product _nghost-yow-c164="" class="ng-star-inserted">
+<div _ngcontent-yow-c164="" class="product_content ng-star-inserted">
     <ul _ngcontent-yow-c164="" class="prd_section">
+    	<c:forEach var="likeList" items="${likeList}">
         <li _ngcontent-yow-c164="" class="ng-star-inserted">
-            <ruler-product-list-large-item _ngcontent-yow-c164="" _nghost-yow-c163=""><div _ngcontent-yow-c163="" class="prd_b">
-    <a _ngcontent-yow-c163="" class="prd_b_area" href="/product/2628258">
+            <ruler-product-list-large-item _ngcontent-yow-c164="" _nghost-yow-c163="">
+            <div _ngcontent-yow-c163="" class="prd_b">
+    		<a _ngcontent-yow-c163="" class="prd_b_area" href="/product/viewDetail.do?pd_id=${likeList.pdId}&large_ctgr_id=${likeList.largeCtgrId}">
         
-        <div _ngcontent-yow-c163="" class="imgbx">
-            <div _ngcontent-yow-c163="" class="imgin">
-                
-               <ruler-blazy _ngcontent-yow-c163="" _nghost-yow-c136="" class="ng-star-inserted"><img _ngcontent-yow-c136="" loading="lazy" src="//img.29cm.co.kr/item/202405/11ef1747d7603d4a892b71ec0f739a64.jpg?width=900" alt="" class="b-lazy loaded">
-			   </ruler-blazy>
-            </div>
-
-            <div _ngcontent-yow-c163="" class="prd_icon ng-star-inserted">
-            </div>
-        </div>
-        <div _ngcontent-yow-c163="" class="info">
+        	<div _ngcontent-yow-c163="" class="imgbx">
+            	<div _ngcontent-yow-c163="" class="imgin">
+	                <ruler-blazy _ngcontent-yow-c163="" _nghost-yow-c136="" class="ng-star-inserted">
+	                <img _ngcontent-yow-c136="" loading="lazy" src="${likeList.pdImageUrl }" alt="" class="b-lazy loaded">
+				    </ruler-blazy>
+            	</div>
+	            <div _ngcontent-yow-c163="" class="prd_icon ng-star-inserted">
+	            </div>
+        	</div>
+        	<div _ngcontent-yow-c163="" class="info">
             <div _ngcontent-yow-c163="" translate="no" class="brand">
-                스탠리
+                ${likeList.brandName }
             </div>
             <div _ngcontent-yow-c163="" class="name">
-                [29CM 단독] [스탠리공식유통사] 퀜처 H2.0 플로우스테이트 텀블러 887ml 스월 (2color)
+                ${likeList.pdName }
             </div>
             <div _ngcontent-yow-c163="" class="price">
                 <!---->
                 <div _ngcontent-yow-c163="" class="sellprice ng-star-inserted">
                     <ruler-price-text _ngcontent-yow-c163="" type="sell" _nghost-yow-c161="" class="sell">
-                    <span _ngcontent-yow-c161="" class="price_sale"><span _ngcontent-yow-c161="" class="num">49,000</span>
+                    <span _ngcontent-yow-c161="" class="price_sale"><span _ngcontent-yow-c161="" class="num"><fmt:formatNumber pattern="###,###" value="${likeList.pdPrice}" /></span>
                     <span _ngcontent-yow-c161="" class="unit">원</span>
                     </span>
 					</ruler-price-text>
@@ -270,18 +270,19 @@
         </div>
     </a>
     
-    <a _ngcontent-yow-c163="" class="prd_brand_go" href="/shop/brand/30351" title="스탠리">스탠리</a>
+    <a _ngcontent-yow-c163="" class="prd_brand_go" href="/shop/brand/30351" title="${likeList.brandName }">${likeList.brandName }</a>
 
     <div _ngcontent-yow-c163="" class="heart_area ng-star-inserted">
         <ruler-heart _ngcontent-yow-c163="" class="heart ng-star-inserted" _nghost-yow-c160="" data-action="unset">
         <div _ngcontent-yow-c160="" class="heartbx active">
-    	<button _ngcontent-yow-c160="" type="button" class="heart">
-        <ruler-svg-icon-heart _ngcontent-yow-c160="" class="ng-star-inserted"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" style="height: 100%;">
+    	<button _ngcontent-yow-c160="" type="button" class="heart" data-pdid="${likeList.pdId }">
+        <ruler-svg-icon-heart _ngcontent-yow-c160="" class="ng-star-inserted">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" style="height: 100%;">
 	    <path d="M9 6.088C9 3.831 10.791 2 13 2s4 1.83 4 4.088c0 1.743-1.46 3.23-1.46 3.23L9 16 2.46 9.318S1 7.83 1 6.088C1 3.831 2.791 2 5 2s4 1.83 4 4.088z" style="fill: none; fill-rule: evenodd;"></path>
 		</svg>
 </ruler-svg-icon-heart>
         <span _ngcontent-yow-c160="" class="count">
-                3,482
+                ${likeList.pdLikeCount}
         </span>
     </button>
 </div>
@@ -298,7 +299,7 @@
 </div>
 </ruler-product-list-large-item>
     <div _ngcontent-yow-c164="" class="btnbx ng-star-inserted">
-		<button _ngcontent-yow-c164="" type="button" class="btn btn_del">
+		<button _ngcontent-yow-c164="" type="button" class="btn_del" data-pdid="${likeList.pdId }">
 		<ruler-svg-icon-close _ngcontent-yow-c164="" stroke="#fff">
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 82" style="width: 100%; height: 100%;">
 	    <g stroke-linecap="square" style="fill: none; fill-rule: evenodd; stroke: rgb(255, 255, 255); stroke-width: 1;">
@@ -309,9 +310,11 @@
 </button>
 			</div>
         </li>
+        </c:forEach>
     </ul>
 
-    <ruler-basic-pagination _ngcontent-yow-c164="" _nghost-yow-c98=""><div _ngcontent-yow-c98="" class="custom-pagination ng-star-inserted">
+    <ruler-basic-pagination _ngcontent-yow-c164="" _nghost-yow-c98="">
+    <div _ngcontent-yow-c98="" class="custom-pagination ng-star-inserted">
     <span _ngcontent-yow-c98="" class="pagination-previous disabled">
     </span>
 
@@ -336,5 +339,48 @@
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 </footer>
+<script>
+$('.btn_del').on('click', function(){
+	let pdId = $(this).data("pdid");
+		
+	$.ajax({
+		url: "/product/removelike.do",
+		type: "POST",
+		data: JSON.stringify({pdId: pdId}),
+		contentType: 'application/json; charset=utf-8',
+        cache: false,
+        success: function() {
+               console.log("좋아요 삭제");
+               location.reload()
+           }.bind(this),
+		error: function(request, status, error){
+			console.log("addLike Ajax 에러 발생");
+			console.log("상태코드 : " + request.status);
+		}
+	});
+		
+})
+
+$('.heart').on('click', function(){
+	let pdId = $(this).data("pdid");
+		
+	$.ajax({
+		url: "/product/removelike.do",
+		type: "POST",
+		data: JSON.stringify({pdId: pdId}),
+		contentType: 'application/json; charset=utf-8',
+        cache: false,
+        success: function() {
+               console.log("좋아요 삭제");
+               location.reload()
+           }.bind(this),
+		error: function(request, status, error){
+			console.log("addLike Ajax 에러 발생");
+			console.log("상태코드 : " + request.status);
+		}
+	});
+		
+})
+</script>
 </mypage-root>
 

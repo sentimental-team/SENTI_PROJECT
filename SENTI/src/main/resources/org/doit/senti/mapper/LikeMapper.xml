@@ -28,6 +28,13 @@
     FROM pd_like
     WHERE pd_id = #{pdId}
   </select>
+  
+  <!-- 회원별 좋아요 갯수  -->
+  <select id="getMemberLikeCount" resultType="Integer">
+  	SELECT COUNT(*) AS pdLikeCount
+    FROM pd_like
+    WHERE member_id = #{loginMemberId}
+  </select>
 
 </mapper>
  
