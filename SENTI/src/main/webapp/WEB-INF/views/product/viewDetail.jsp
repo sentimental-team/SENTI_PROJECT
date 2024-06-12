@@ -73,11 +73,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--    
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                                
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
                 <li class="css-wb64ex ehh6z822">
@@ -91,11 +93,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--     
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                               
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
             </ul>
@@ -1025,7 +1029,7 @@ $(document).ready(function() {
 	                url: "/user/cartAdd.do",
 	                contentType: "application/json",
 	                data: JSON.stringify(cartDTO),
-	                success: function(response) {
+	                success: function() {
 	                    alert("상품이 장바구니에 추가되었습니다.");
 	                    
 	                    let confirmMove = confirm("장바구니로 이동하시겠습니까 ?");

@@ -13,7 +13,7 @@ public class CartDTO {
 	private String memberId;
 	private int pdId;
 	
-	//getCart
+	// getCart
 	private String pdName;
 	private String pdImageURL;
 	private String brandName;
@@ -24,6 +24,8 @@ public class CartDTO {
 	private int stock;
 	private int largeCtgrId;
 	
-	//deleteCart
+	// deleteCart
 	private int cartId;
+	
+	// 주문쪽 결제 부분
 }
