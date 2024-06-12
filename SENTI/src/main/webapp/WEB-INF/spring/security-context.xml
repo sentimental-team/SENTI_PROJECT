@@ -12,27 +12,49 @@
     <security:http pattern="/design/**" security="none"/>
     <security:http pattern="/css/**" security="none"/>
     <security:http pattern="/js/**" security="none"/>
+    <security:http pattern="/signUp/dupliId.do" security="none"/>
+    
 
-    <security:http use-expressions="true">
+	 <security:http use-expressions="true">
+    	
+    	<!-- 세션 관리 설정 추가 -->
+        <security:session-management session-fixation-protection="migrateSession">
+            <security:concurrency-control max-sessions="1" expired-url="/signUp/login.do?expired=true"/>
+        </security:session-management>
+    	
         <!-- URL 패턴에 대한 권한 설정 -->
-        <security:intercept-url pattern="/signUp/login.htm" access="permitAll"/>
-        <security:intercept-url pattern="/signUp/logout.htm" access="permitAll"/>
-        <security:intercept-url pattern="/**" access="isAuthenticated()"/>
+        <security:intercept-url pattern="/signUp/join.do" access="permitAll"/>
+        <security:intercept-url pattern="/signUp/login.do" access="permitAll"/>
+        <security:intercept-url pattern="/signUp/logout.do" access="permitAll"/>
+        <security:intercept-url pattern="/signUp/**" access="permitAll"/>
+        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/main.do" access="permitAll"/>
+        <security:intercept-url pattern="/" access="permitAll"/>
+        
+        <!-- 모든 .do 및 .jsp 파일에 권한 설정 -->
+        <security:intercept-url pattern="/**/*.do" access="permitAll"/>
+        <security:intercept-url pattern="/**/*.jsp" access="permitAll"/>
+        
+        
+        <!-- 그 외의 모든 URL 권한 설정 -->
+        <security:intercept-url pattern="/**" access="permitAll"/>
 
         <!-- 커스텀 로그인 페이지 -->
-        <security:form-login login-page="/signUp/login.htm"
-                             login-processing-url="/j_spring_security_check"
-                             username-parameter="j_username"
-                             password-parameter="j_password"
-                             authentication-failure-url="/signUp/login.htm?error=true"
+        <security:form-login login-page="/signUp/login.do"
+                             login-processing-url="/login"
+                             username-parameter="username"
+                             password-parameter="password"
+                             authentication-success-handler-ref="loginSuccessHandler"
+                             authentication-failure-url="/signUp/login.do?error=true"
                              default-target-url="/main.do"
                              always-use-default-target="true"/>
 
         <!-- 로그아웃 설정 -->
-        <security:logout logout-url="/signUp/logout.htm"
-                         invalidate-session="true"
-                         logout-success-url="/"/>
-    </security:http>
+        <security:logout logout-url="/signUp/logout.do"
+                     invalidate-session="true"
+                     delete-cookies="JSESSIONID"
+                     logout-success-url="/main.do"/>
+		</security:http>
 
     <!-- PasswordEncoder -->
     <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>

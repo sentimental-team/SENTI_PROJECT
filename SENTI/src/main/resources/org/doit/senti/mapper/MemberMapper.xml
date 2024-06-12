@@ -13,7 +13,8 @@
       MEMBER_NAME as memberName, 
       MILEAGE, 
       COUPON_ID as couponId, 
-      GRADE_ID as gradeId
+      GRADE_ID as gradeId,
+      ENABLED
     FROM MEMBER
     WHERE MEMBER_ID = #{memberId}
   </select>
@@ -51,7 +52,7 @@
   </select>
   
   <!-- 회원 정보 삽입 -->
-  <insert id="insert" parameterType="MemberVO">
+  <insert id="insert" parameterType="org.doit.senti.domain.user.MemberVO">
     INSERT INTO MEMBER 
       (MEMBER_ID, MEMBER_PWD, MEMBER_NAME, MILEAGE, COUPON_ID, GRADE_ID, ENABLED) 
     VALUES 

@@ -268,7 +268,7 @@ a {
 				<p>로그인에 실패했습니다. 다시 시도해주세요.</p>
 			</c:if>
 			<form method="post"
-				action="/signUp/login.do">
+				action="/login">
 				<div class="css-1xlzx9v e8awftn0">
 					<input class="css-coe4td e6yr7gu0" placeholder="아이디 (이메일)"
 						autocapitalize="none" autocomplete="username" type="text"
@@ -279,7 +279,7 @@ a {
 						autocapitalize="none" id="current-password"
 						autocomplete="current-password" type="password" name="password">
 				</div>
-				<button class="btn_login" type="submit">로그인하기</button>
+				<button class="btn_login" type="submit" value="Login">로그인하기</button>
 				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			</form>
 		</div>

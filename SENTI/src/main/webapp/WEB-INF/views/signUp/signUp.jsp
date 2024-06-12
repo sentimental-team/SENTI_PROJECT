@@ -547,6 +547,7 @@ button {
 		</div>
 		<button class="btn31" type="submit" disabled="">다음</button>
 	  </div>
+	  <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	  </form>
 		</div>
 		</div>
@@ -624,6 +625,13 @@ $(document).ready(function(){
   	}
   }
   
+  /* var csrfHeaderName = "${_crsf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	$(document).ajaxSend(function(e, xhr){
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	}); */
+  
+
   $(".ip1").on("keyup",function validateEmail() {
 	var memberId = $(".ip1").val();
 	var name = $(".ip4").val();

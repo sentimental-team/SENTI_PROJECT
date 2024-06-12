@@ -12,6 +12,7 @@
         <result property="mileage" column="MILEAGE"/>
         <result property="couponId" column="COUPON_ID"/>
         <result property="gradeId" column="GRADE_ID"/>
+        <result property="enabled" column="ENABLED"/>
         <collection property="authList" ofType="org.doit.senti.domain.user.AuthVO">
             <id property="username" column="USERNAME"/>
             <result property="authority" column="AUTHORITY"/>
@@ -19,7 +20,7 @@
     </resultMap>
 
     <select id="selectMemberById" resultMap="memberResultMap" parameterType="String">
-        SELECT MEMBER_ID, MEMBER_PWD, MEMBER_NAME, MILEAGE, COUPON_ID, GRADE_ID
+        SELECT MEMBER_ID, MEMBER_PWD, MEMBER_NAME, MILEAGE, COUPON_ID, GRADE_ID, ENABLED
         FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
