@@ -193,6 +193,12 @@ public class ProductController {
 	    	 
 	    	 product.setLikeCheck(result);
 	    	 product.setPdLikeCount(likeCount);
+	    	 
+	    	 int reviewCnt = reviewMapper.reviewCount(product.getPdId());
+	    	 //int reviewAvg = reviewMapper.reviewAverage(product.getPdId());
+	    	 
+	    	 //product.setReviewAvg(reviewAvg);
+	    	 product.setReviewCnt(reviewCnt);
 	     }
 
 	      model.addAttribute("mList",this.boardService.mList(large_ctgr_id));

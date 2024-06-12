@@ -17,6 +17,9 @@ public interface ReviewMapper {
 	// 상품 아이디로 리뷰 갯수
 	public int reviewCount(int pd_id) throws ClassNotFoundException, SQLException;
 	
+	// 상품 아이디로 리뷰 평점
+	public int reviewAverage(int pd_id)throws ClassNotFoundException, SQLException;
+	
 	// 리뷰 작성
 	public int reviewInsert(ReviewVO review) throws ClassNotFoundException, SQLException;
 	
