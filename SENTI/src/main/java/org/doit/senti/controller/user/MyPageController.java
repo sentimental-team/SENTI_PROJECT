@@ -1,29 +1,20 @@
 package org.doit.senti.controller.user;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.doit.senti.controller.board.ProductController;
-import org.doit.senti.domain.board.BoardVO;
 import org.doit.senti.domain.board.LikeListDTO;
 import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.mapper.LikeListMapper;
-import org.doit.senti.mapper.LikeMapper;
-import org.doit.senti.mapper.MemberMapper;
-import org.doit.senti.mapper.ProductRegisterMapper;
-import org.doit.senti.service.board.BoardService;
 import org.doit.senti.service.board.LikeService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -46,7 +37,11 @@ public class MyPageController {
 	@GetMapping("/mylike.do")
 	public String myLike(HttpSession session, Model model) throws Exception{
 		
-		String loginMemberId = "jindol@naver.com";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
+		
 		List<LikeListDTO> likeList = likeListMapper.getLikeList(loginMemberId);
 		int myLikeCount = likeService.getMemberLikeCount(loginMemberId);
 		String memberName = likeListMapper.selectMemberName(loginMemberId);

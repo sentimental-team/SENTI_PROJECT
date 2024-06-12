@@ -19,7 +19,7 @@ public class MemberVO {
 	private int couponId;
 	private int gradeId;
 	
-	private boolean enabled;
+	private boolean enabled = true;
 	private List<AuthVO> authList; // 권한 리스트
 
 }

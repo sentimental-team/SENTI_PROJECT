@@ -14,12 +14,12 @@
   <!-- 좋아요 추가 -->
   <insert id="insertProductLike" >
 	  INSERT INTO pd_like (pd_like_id, member_id, pd_id) 
-	  VALUES ( (SELECT NVL(MAX(TO_NUMBER(pd_like_id)),0)+1 FROM pd_like), #{memberId}, #{pdId} )
+	  VALUES ( (SELECT NVL(MAX(TO_NUMBER(pd_like_id)),0)+1 FROM pd_like), #{loginMemberId}, #{pdId} )
   </insert>
   
   <delete id="deleteProductLike">
   	DELETE pd_like
-	WHERE pd_id = #{pdId} AND member_id = #{memberId}
+	WHERE pd_id = #{pdId} AND member_id = #{loginMemberId}
   </delete>
   
   <!-- 좋아요 갯수  -->
