@@ -225,7 +225,7 @@
         $(".medium_category").on("change", function() {
             // 선택된 옵션의 값을 가져옴
             let selectedMediumCategoryId = $(this).val();
-             alert("선택된 Main Category ID: " + selectedMediumCategoryId);
+            // alert("선택된 Main Category ID: " + selectedMediumCategoryId);
 	            $.ajax({
 	            	type: "POST",
 	            	url: "/product/smallCtgr.do",

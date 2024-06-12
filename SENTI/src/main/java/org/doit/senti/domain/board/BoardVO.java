@@ -44,7 +44,7 @@ public class BoardVO {
 	// 좋아요 수
 	private int pdLikeCount;
 	private int likeCheck;
-
+	
 	//
 	private String selectOption;
 	

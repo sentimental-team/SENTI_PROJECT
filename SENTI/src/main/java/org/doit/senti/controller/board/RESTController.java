@@ -43,9 +43,25 @@ public class RESTController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE
 			
 	})
-	public List<BoardVO> selectByMediumCtgrId(@RequestBody BoardVO boardvo) {
+	public List<BoardVO> selectByMediumCtgrId(@RequestBody BoardVO boardvo) throws Exception {
 		
-		return this.boardMapper.selectByMediumCtgrId(boardvo.getMediumCtgrId());
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardMapper.selectByMediumCtgrId(boardvo.getMediumCtgrId());
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	     }
+		
+		return productList;
 	}
 	
 	@PostMapping(value = "/men_si.do"
@@ -53,9 +69,25 @@ public class RESTController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE
 			
 	})
-	public List<BoardVO> selectBySmallCtgrId(@RequestBody BoardVO boardvo) {
-
-		return this.boardMapper.selectBySmallCtgrId(boardvo.getSmallCtgrId());
+	public List<BoardVO> selectBySmallCtgrId(@RequestBody BoardVO boardvo) throws Exception {
+		
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardMapper.selectBySmallCtgrId(boardvo.getSmallCtgrId());
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	     }
+		
+		return productList;
 	}
 	
 	@PostMapping(value = "/men_oi.do"
