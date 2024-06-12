@@ -20,7 +20,7 @@
   
   <!-- public int reviewAverage(int pd_id)throws ClassNotFoundException, SQLException; -->
   <select id="reviewAverage" resultType="int">
-    SELECT AVG(NVL(review_rating,0))
+    SELECT NVL(AVG(review_rating),0)
     FROM review r JOIN pay p ON r.pay_id = p.pay_id
     WHERE pd_id = #{pd_id}
   </select>
