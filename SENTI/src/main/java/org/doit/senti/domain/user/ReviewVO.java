@@ -19,6 +19,7 @@ public class ReviewVO {
 	private int reviewRating;
 	private int payId;
 	private Date reviewDate;
+	private String memberId;
 	
 	private CommonsMultipartFile file;
 }
