@@ -21,6 +21,8 @@ public interface LikeMapper {
 	// 좋아요 갯수
 	public int getLikeCount(int pdId) throws ClassNotFoundException, SQLException;
 	
+	// 회원별 좋아요 갯수
+	public int getMemberLikeCount(String loginMemberId) throws ClassNotFoundException, SQLException;
 	
 	
 }

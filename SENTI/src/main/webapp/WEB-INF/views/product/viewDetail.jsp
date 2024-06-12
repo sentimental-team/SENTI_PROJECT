@@ -17,6 +17,33 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header>
 	<jsp:include page="/WEB-INF/views/layout/top.jsp" flush="false"></jsp:include>
 </header>
+<style>
+ .reviewForm {
+    display: inline-block; 
+    direction: rtl; /* 이모지 순서 반전 */
+    border: 0; 
+  }
+  .reviewForm input[type=radio]{
+    display: none; 
+  }
+  .reviewForm label:hover{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+  }
+  .reviewForm label:hover ~ label{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+  }
+  
+  .reviewForm svg:hover #star{
+    fill:#000000;
+  }
+  .reviewForm label:hover ~ label #star{
+    fill:#000000;
+  }
+  .reviewForm input[type=radio]:checked ~ label #star{
+     fill:#000000;
+  }
+ 
+</style>
 <body>
     <div class="css-zqyuit e1uo4o523">	<!-- 위에 버튼 3개 부분.  -->
         <div class="css-0 ehh6z820">
@@ -46,11 +73,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--    
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                                
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
                 <li class="css-wb64ex ehh6z822">
@@ -64,11 +93,13 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--     
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                               
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
             </ul>
@@ -486,7 +517,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 <button class="reviewWrite" type="button">REVIEW쓰기</button>
 			</div>
 			<!-- --------------------------------------------------------------------------------------------------------------- -->
-					<form action="/viewDetail/review.do" method="post" enctype="multipart/form-data">
+					<form action="/viewDetail/review.do" method="post" enctype="multipart/form-data" >
 					<div class="reviewBox">
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">아이디</h2>
@@ -498,7 +529,38 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">상품별점</h2>
 						<div class="reviewSquare">
-							<span class="reviewID">별점 어케 줌,,</span>
+							<span class="reviewID" ><fieldset class="reviewForm">
+        <input type="radio" name="rating" value="5" id="rate1"><label for="rate1"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="4" id="rate2"><label for="rate2"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio"" name="rating" value="3" id="rate3"><label for="rate3"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="2" id="rate4"><label for="rate4"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="1" id="rate5"><label for="rate5"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+    </fieldset></span>
 						</div>
 					</div>
 					<div class="reviewMbox">
@@ -656,7 +718,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         </div>
                     </li>
                     </c:forEach>
-                    <!-- ---------------------  페이징 처리 ----------------------  -->
+                    <!-- ---------------------  리뷰페이징 처리 ----------------------  -->
                    </ul>
                  </div>
                  <div >
@@ -967,7 +1029,7 @@ $(document).ready(function() {
 	                url: "/user/cartAdd.do",
 	                contentType: "application/json",
 	                data: JSON.stringify(cartDTO),
-	                success: function(response) {
+	                success: function() {
 	                    alert("상품이 장바구니에 추가되었습니다.");
 	                    
 	                    let confirmMove = confirm("장바구니로 이동하시겠습니까 ?");
@@ -1021,6 +1083,8 @@ $("#option2").on("click", function(event){
    	           
    	              
    	     });
+   	        
+	   
 </script>
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>

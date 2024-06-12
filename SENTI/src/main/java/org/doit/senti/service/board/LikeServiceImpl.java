@@ -46,4 +46,12 @@ public class LikeServiceImpl implements LikeService{
 		return rowCount;
 	}
 
+	@Override
+	public int getMemberLikeCount(String loginMemberId) throws ClassNotFoundException, SQLException {
+		
+		int rowCount = likeMapper.getMemberLikeCount(loginMemberId);
+		
+		return rowCount;
+	}
+
 }

@@ -13,4 +13,5 @@ public interface LikeService {
 	public void insertProductLike(ProductLikeDTO pdLikeDTO) throws ClassNotFoundException, SQLException;
 	public void deleteProductLike(ProductLikeDTO pdLikeDTO) throws ClassNotFoundException, SQLException;
 	public int getLikeCount(int pdId) throws ClassNotFoundException, SQLException;
+	public int getMemberLikeCount(String loginMemberId) throws ClassNotFoundException, SQLException;
 }

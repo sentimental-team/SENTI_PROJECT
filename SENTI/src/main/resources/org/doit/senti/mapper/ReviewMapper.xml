@@ -18,9 +18,17 @@
     WHERE pd_id = #{pd_id}
   </select>
   
+  <!-- public int reviewAverage(int pd_id)throws ClassNotFoundException, SQLException; -->
+  <select id="reviewAverage" resultType="int">
+    SELECT NVL(AVG(review_rating),0)
+    FROM review r JOIN pay p ON r.pay_id = p.pay_id
+    WHERE pd_id = #{pd_id}
+  </select>
+  
   <!-- public int reviewInsert(ReviewVO review) throws ClassNotFoundException, SQLException; -->
   <insert id="reviewInsert">
-    INSERT review 
+    INSERT INTO review ( review_id, review_content, review_rating, pay_id <if test="imageUrl != null">, image_url</if>)
+    VALUES ( (SELECT NVL(MAX(review_id),0)+1 FROM review, #{reviewContent}, #{reviewRating}, #{payId} <if test="imageUrl != null">, #{imageUrl}</if> )
   </insert>
   
   <!-- public int reviewUpdate(ReviewVO review)throws ClassNotFoundException, SQLException; -->
@@ -36,8 +44,27 @@
   <!-- public int reviewDelete(int payId)throws ClassNotFoundException, SQLException; -->
   <delete id="reviewDelete">
     DELETE review
-    WHERE pay_id = #{pd_id}
+    WHERE pay_id = #{payId}
   </delete>
+  
+  <!-- public int returnPayId(int pd_id, String memberId)throws ClassNotFoundException, SQLException; -->
+  <select id="returnPayId" resultType="int">
+    SELECT pay_id
+    FROM pay
+    WHERE pd_id = #{pd_id} AND member_id = #{memberId} AND pay_id NOT IN ( SELECT pay_id FROM pay p JOIN review r ON p.pay_id = r.pay_id WHERE pd_id = #{pd_id} AND member_id = #{memberId})
+  </select>
+  
+  <!-- public int existPayId(int pd_id, String memberId) throws ClassNotFoundException, SQLException; -->
+  <select id="existPayId" resultType="int">
+    SELECT COUNT(*)
+    FROM (
+    SELECT pay_id
+    FROM pay
+    WHERE pd_id = #{pd_id} AND member_id = #{memberId} AND pay_id NOT IN ( SELECT pay_id FROM pay p JOIN review r ON p.pay_id = r.pay_id WHERE pd_id = #{pd_id} AND member_id = #{memberId})
+          )
+  </select>
+  
+  
   
 </mapper>
  
