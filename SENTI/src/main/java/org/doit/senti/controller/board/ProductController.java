@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.doit.senti.domain.board.BoardVO;
+import org.doit.senti.domain.board.ProductCategoryDTO;
 import org.doit.senti.domain.board.ProductImageDTO;
+import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.domain.board.ProductRegisterDTO;
+import org.doit.senti.mapper.CategoryMapper;
 import org.doit.senti.mapper.ProductRegisterMapper;
 import org.doit.senti.mapper.ReviewMapper;
 import org.doit.senti.service.board.BoardService;
+import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,15 +43,25 @@ public class ProductController {
 	
 	@Autowired
 	private BoardService boardService;
-
+	
+	@Autowired
+	private LikeService likeService;
+	
 	@Autowired
 	private ReviewMapper reviewMapper;
 	
+	private CategoryMapper categoryMapper;
 
 
 	@GetMapping("/productRegister.do")
-	public String productReg(HttpSession session) throws Exception{
-
+	public String productReg(HttpSession session, Model model) throws Exception{
+		
+		List<ProductCategoryDTO> mainCtgrList = categoryMapper.getMainCtgr();
+		List<ProductCategoryDTO> brandList = categoryMapper.getBrand();
+		
+		model.addAttribute("mainCtgrList", mainCtgrList);
+		model.addAttribute("brandList", brandList);
+		
 		return "product/productRegister.jsp";
 	}
 
@@ -59,31 +75,29 @@ public class ProductController {
 		return fileUuidName;
 
 	}
-	//	@PostMapping("/productRegister.do")
-	//	public String productReg() throws Exception{
-	//		
-	//		//System.out.println(">>>>>>>" + pdDTO);
-	//		System.out.println(">>>>>>>" );
-	//		
-	////		  ProductRegisterDTO pdDTO
-	////			, ProductImageDTO pdImageDTO
-	////			, HttpServletRequest request
-	//			return "main.jsp";
-	//		 
-	//	}
-
 
 	@PostMapping("/productRegister.do")
 	public String productReg( ProductRegisterDTO pdDTO
 						, ProductImageDTO pdImageDTO
 						, HttpServletRequest request ) throws Exception{ 
+			
+			int rowCount = 0;
 		
+			String smallCtgrIdStr = request.getParameter("smallCtgrId");
+			
+			if(smallCtgrIdStr == null || smallCtgrIdStr.isEmpty()) {
+				rowCount = this.productRegister.insertProductNoneSmallCtgr(pdDTO);
+			}
+			else {
+				int smallCtgrId = Integer.parseInt(smallCtgrIdStr);
+				pdDTO.setSmallCtgrId(smallCtgrId);
+				rowCount = this.productRegister.insertProduct(pdDTO);
+			}
+		    
 		    List<MultipartFile> pdImageList = pdImageDTO.getPdImageList();
 		    MultipartFile pdInfoImage = pdImageDTO.getPdInfoImage();
 		    String uploadRealPath = null;
 		    String uploadRealPath2 = null;
-		    
-		    int rowCount = this.productRegister.insertProduct(pdDTO);
 		    
 			System.out.println(">>>>>>>>>" + pdImageList);
 			for(MultipartFile pdImage : pdImageList) {
@@ -100,7 +114,7 @@ public class ProductController {
 
 					File dest1 = new File(uploadRealPath, fileSystemname);
 					pdImage.transferTo(dest1);
-					pdImageDTO.setPdImageUrl(fileSystemname);
+					pdImageDTO.setPdImageUrl("../upload/" + fileSystemname);
 					pdImageDTO.setPdImageUuid(uploadRealPath);
 					
 					rowCount = this.productRegister.insertProductImg(pdImageDTO);
@@ -125,7 +139,7 @@ public class ProductController {
 
 				File dest2 = new File(uploadRealPath2, InfofileSystemname);
 				pdInfoImage.transferTo(dest2);
-				pdImageDTO.setPdInfoImageUrl(InfofileSystemname);
+				pdImageDTO.setPdInfoImageUrl("../upload/" + InfofileSystemname);
 				pdImageDTO.setPdImageInfoUuid(uploadRealPath2);
 				
 
@@ -155,19 +169,51 @@ public class ProductController {
 	  
 	 
 	@GetMapping("/men.do")
-	public String listup(HttpSession session, Model model,@RequestParam("large_ctgr_id") int large_ctgr_id, @RequestParam("medium_ctgr_id") int medium_ctgr_id) throws Exception{
+	public String listup(HttpSession session, Model model,
+			
+			@RequestParam("large_ctgr_id") int large_ctgr_id,
+			@RequestParam("medium_ctgr_id") int medium_ctgr_id,
+			
+			HttpServletRequest req, HttpServletResponse res
+			) throws Exception{
 		
 		log.info("> BoardController.list()...");
+		
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardService.getList(medium_ctgr_id);
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	    	 
+	    	 int reviewCnt = reviewMapper.reviewCount(product.getPdId());
+	    	 int reviewAvg = reviewMapper.reviewAverage(product.getPdId());
+	    	 
+	    	 product.setReviewAvg(reviewAvg);
+	    	 product.setReviewCnt(reviewCnt);
+
+	     }
+
 	      model.addAttribute("mList",this.boardService.mList(large_ctgr_id));
-	      model.addAttribute("list",  this.boardService.getList(medium_ctgr_id));
-	      model.addAttribute("lList",this.boardService.lList(large_ctgr_id));
+	      // model.addAttribute("list",  this.boardService.getList(medium_ctgr_id));
+	      model.addAttribute("list",  productList);
+	      model.addAttribute("loginMemberId", loginMemberId);
 	      
 		return "product/men.jsp";
 		
 	}
+
 	
 	@GetMapping("/viewDetail.do")
-	public String viewDetail(HttpSession session, Model model,@RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
+	public String viewDetail(HttpSession session, Model model,@RequestParam("large_ctgr_id") int large_ctgr_id, @RequestParam("pd_id") int pd_id ) throws ClassNotFoundException, SQLException {
 		System.out.println(">>>>>> pd_id : "+ pd_id);
 		
 		log.info("> BoardController2.list()...");
@@ -176,6 +222,8 @@ public class ProductController {
 		model.addAttribute("iDetail", this.boardService.getInfoImage(pd_id));
 		model.addAttribute("reviewCount", this.reviewMapper.reviewCount(pd_id));
 		model.addAttribute("reviews", this.reviewMapper.getReviews(pd_id));
+		model.addAttribute("oDetail", this.boardService.getOption(large_ctgr_id));
+		
 		
 		return "product/viewDetail.jsp";  
 	}	

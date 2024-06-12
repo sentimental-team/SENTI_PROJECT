@@ -23,5 +23,9 @@ public interface BoardService {
 	List<BoardVO> getInfoImage(int pd_id);
 
 	BoardVO lList(int large_ctgr_id);
+
+	List<BoardVO> getOption(int large_ctgr_id);
+	
+
 	
 }

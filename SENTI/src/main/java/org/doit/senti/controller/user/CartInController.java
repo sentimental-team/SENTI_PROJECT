@@ -1,12 +1,17 @@
 package org.doit.senti.controller.user;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
+import java.io.Console;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.doit.senti.domain.board.BoardVO;
 import org.doit.senti.domain.user.CartDTO;
 import org.doit.senti.mapper.CartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,17 +52,22 @@ public class CartInController {
 		return "user/cart.jsp";
 	}
 	
-	// 장바구니 선택 삭제
-	@PostMapping("/cartDel.do")
-	public String deleteSelectCart(@RequestParam("cartIdList") List<Integer> cartIdList) throws Exception{
+	
+	
+	// 장바구니 단일 상품 삭제 - 보류
+	/*
+	@PostMapping(value = "/cartSingleDel.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@ResponseBody
+	public int deleteCart(@RequestParam("cartId") int cartId) throws Exception{
 		log.info("> CartController.cartDel() ... ");
 		
-		cartMapper.deleteSelectCart(cartIdList);
+		int result = cartMapper.deleteCart(cartId);
 		
-		return "redirect:/user/cart.do";
+		return result;
 	}
+	*/
 	
-	// 장바구니 개별 삭제
+	// 장바구니 단일 상품 삭제
 	@GetMapping("/cartDel.do")
 	public String deleteCart(@RequestParam("cart_id") int cartId) throws Exception{
 		log.info("> CartController.cartDel() ... ");
@@ -67,13 +77,50 @@ public class CartInController {
 		return "redirect:/user/cart.do";
 	}
 	
-	// 주문 페이지로 이동
+	// 장바구니 다중 상품 삭제
+	@PostMapping(value = "/cartMultipleDel.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@ResponseBody
+	public int deleteSelectCart(@RequestParam("cartId") List<Integer> cartIdList) throws Exception{
+		log.info("> CartController.cartDel() ... ");
+		
+		int result = cartMapper.deleteSelectCart(cartIdList);
+		
+		return result;
+	}
+	
 	@GetMapping("/order.do")
-	public String order(HttpSession httpSession) throws Exception{
+	public String getProductToOrder(@RequestParam("cartId") int cartId, Model model) throws Exception{
+		
+		model.addAttribute("list", this.cartMapper.getProductToOrder(cartId));
 		
 		return "/user/order.jsp";
 	}
 	
+	
+	@GetMapping("/order2.do")
+	public String getProductToOrder2(@RequestParam("cartId") List<Integer> cartId, Model model) throws Exception{
+		//System.out.println(this.cartMapper.getProductToOrder2(cartId));
+	   	List<CartDTO> list = cartMapper.getProductToOrder2(cartId);
+	   	model.addAttribute("list", list);
+	   	
+	   	System.out.println(list);
+	   	
+		return "/user/order2.jsp";
+	}
+
+	
+	/*
+	// 상품 주문
+	@PostMapping("/order.do")
+	public String getProductToOrder(@RequestParam("cartId") int cartId) throws Exception{
+		
+		log.info(">>>>> getProductToOrder () ... <<<<<");
+		
+		cartMapper.getProductToOrder(cartId);
+		
+		return "/user/order.jsp";
+	}
+	*/
 	
 	/*
 	// 장바구니 수량 수정
