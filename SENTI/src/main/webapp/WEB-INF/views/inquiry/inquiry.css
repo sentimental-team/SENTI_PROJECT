@@ -1548,6 +1548,46 @@ input[type=radio]:checked+label:before {
     border-right: 1px solid var(--ruler-semantic-color-border-line);
 }
 
+/* 삭제버튼 스타일 */
+.css-funda3 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-height: 50px;
+    position: relative;
+    flex: 0 0 60px;
+}
+
+.css-1a57md6 {
+    width: 43px;
+    height: 34px;
+    font-size: 12px;
+    color: rgb(93, 93, 93);
+    border: 1px solid rgb(212, 212, 212);
+}
+/* 답변유무 스타일 */
+.css-1l8qa95 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    min-height: 50px;
+    position: relative;
+    flex: 0 0 70px;
+}
+
+.css-iuu3r9 {
+    display: inline-block;
+    font-weight: var(--ruler-semantic-typography-title-xs-bold-font-weight);
+    line-height: var(--ruler-semantic-typography-title-xs-bold-line-height);
+    font-size: var(--ruler-semantic-typography-title-xs-bold-font-size);
+    color: var(--ruler-semantic-color-text-primary);
+    font-family: Campton;
+}
+
 
 
 

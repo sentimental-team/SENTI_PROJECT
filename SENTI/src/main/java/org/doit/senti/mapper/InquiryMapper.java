@@ -3,30 +3,22 @@ package org.doit.senti.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.doit.senti.domain.board.InquiryVO;
 
 public interface InquiryMapper {
-		/*
-		 * // ¹®ÀÇ³»¿ª °¹¼ö ¹İÈ¯ÇÏ´Â ¸Ş¼­µå public int getCount(String field, String query) throws
-		 * ClassNotFoundException, SQLException;
-		 */
 		
-		/*
-		 * // ¹®ÀÇ³»¿ªÀÇ ¸ñ·ÏÀ» List ÄÃ·º¼ÇÀ¸·Î ¹İÈ¯ÇÏ´Â ¸Ş¼­µå public List<InquiryVO> getInquirys ( int
-		 * page // ÇöÀç ÆäÀÌÁö ¹øÈ£ , String field // °Ë»öÁ¶°Ç , String query // °Ë»ö¾î ) throws
-		 * ClassNotFoundException, SQLException;
-		 */
-		
-		// ¹®ÀÇ³»¿ª »èÁ¦ÇÏ´Â ¸Ş¼­µå
+		// ë¬¸ì˜ë‚´ì—­ ì‚­ì œí•˜ëŠ” ë©”ì„œë“œ
 		public int delete(String inquiryId) throws ClassNotFoundException, SQLException;		
 		
-		// ¹®ÀÇ³»¿ª Ãß°¡ÇÏ´Â ¸Ş¼­µå
+		// ë¬¸ì˜ë‚´ì—­ ì¶”ê°€í•˜ëŠ” ë©”ì„œë“œ
 		public int insert(InquiryVO inquiry) throws ClassNotFoundException, SQLException;
 
-		// ¹®ÀÇ³»¿ªÀÇ ¸ñ·ÏÀ» List ÄÃ·º¼ÇÀ¸·Î ¹İÈ¯ÇÏ´Â ¸Ş¼­µå		
+		// ë¬¸ì˜ë‚´ì—­ì˜ ëª©ë¡ì„ List ì»¬ë ‰ì…˜ìœ¼ë¡œ ë°˜í™˜í•˜ëŠ” ë©”ì„œë“œ		
 		public List<InquiryVO> getInquirys(String memberId) throws ClassNotFoundException, SQLException;
 		
-		// Æ®·£Àè¼Ç Ã³¸®¸¦ À§ÇÑ ¸Ş¼­µå Ãß°¡
+		// íŠ¸ëœì­ì…˜ ì²˜ë¦¬ë¥¼ ìœ„í•œ ë©”ì„œë“œ ì¶”ê°€
 		// public void insertAndPointUpOfMember(NoticeVO notice, String id) throws ClassNotFoundException, SQLException;
 		
 	}
+

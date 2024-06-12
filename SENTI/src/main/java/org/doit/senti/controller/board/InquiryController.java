@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @AllArgsConstructor
-@RequestMapping("/inquiry/*")
+@RequestMapping("/inquiry")
 public class InquiryController {
 
 	@Autowired
@@ -33,7 +33,8 @@ public class InquiryController {
 	
 	//파일이름 체크
 		private String getFileNameCheck(String uploadRealPath, String originalFilename) {
-			int index = 1;      
+			int index = 1;  
+			
 			while( true ) {         
 				File f = new File(uploadRealPath, originalFilename);         
 				if( !f.exists() ) return originalFilename;         
@@ -50,29 +51,30 @@ public class InquiryController {
 	// 문의내역 삭제
 	@Transactional
 	@GetMapping("/inquiryDel.do")
-	public String noticeDel(
+	public String inquiryDel(
 			@RequestParam("inquiryId") String inquiryId
 		  , @RequestParam("filesrc") String filesrc
 		  , HttpServletRequest request
 		  ) throws Exception{
 		log.info("> InquiryController.inquiryDel() GET...");
-		// 1. 첨부파일이 있는 공지사항일 경우 첨부파일도 삭제
+		
+		// 1. 첨부파일이 있는 문의사항일 경우 첨부파일도 삭제
 		String uploadRealPath = request.getServletContext().getRealPath("/inquiry/upload");
 		File delFile = new File(uploadRealPath, filesrc);
 		if (delFile.exists()) {
 			delFile.delete();
 		}
-		// 2. 공지사항 글도 삭제
-		int rowCount = this.inquiryMapper.delete(inquiryId);
-		if (rowCount ==1) {  // 글삭제 성공
+		// 2. 문의내역 글도 삭제
+		int rowCount = inquiryMapper.delete(inquiryId);
+		if (rowCount == 1) {  // 글삭제 성공
 			// redirect 접두어 == response.sendRedirect()
-			return "inquiry/inquiryReg.jsp";
+			return "redirect:/inquiry/inquiryReg.jsp";
 		}else {  // 글삭제 실패
-			return "redirect:inquiryReg.do?inquiryId="+ inquiryId + "&error";
+			return "redirect:/inquiry/inquiryReg.do?inquiryId="+ inquiryId + "&error";
 		}
 	}	
 
-	// 문의사항 등록하기
+	// 문의사항 등록 페이지 이동
 	// InquiryVO inquiry 커맨드 객체(command object)	
 	@GetMapping(value = "/inquiryReg.do")
 	public String inquiryReg(Model model
@@ -82,7 +84,7 @@ public class InquiryController {
 		return "inquiry/inquiryReg.jsp";
 	}
 	
-	
+	// 문의사항 등록하기
 	@PostMapping(value = "/inquiryReg.do")
 	public String insert(InquiryVO inquiry
 			, HttpServletRequest request) throws Exception {
@@ -90,9 +92,7 @@ public class InquiryController {
 		
 		List<MultipartFile> inquiryFileList = inquiry.getInquiryFileList();
 		MultipartFile inquiryImage = inquiry.getInquiryImage();
-	    String uploadRealPath = null;		
-		
-	    int rowCount = this.inquiryMapper.insert(inquiry);
+	    String uploadRealPath = null;				
 	    
 		System.out.println(">>>>>>>>>" + inquiryFileList);
 				
@@ -106,16 +106,15 @@ public class InquiryController {
 
 			String originalFilename = inquiryImage.getOriginalFilename();
 			String fileSystemname = getFileNameCheck(uploadRealPath, originalFilename);
-
 			File dest2 = new File(uploadRealPath, fileSystemname);
 			inquiryImage.transferTo(dest2);
 			inquiry.setInquiryFileList(inquiryFileList);
 		}
 		
-		rowCount = this.inquiryMapper.insert(inquiry);
+		int rowCount = inquiryMapper.insert(inquiry);
 		
-		if (rowCount >= 1) { 
-			return "inquiry/inquiry.jsp"; 
+		if (rowCount == 1) { 
+			return "redirect:/inquiry/inquiry.jsp"; 
 		} 
 		else { 
 			return "inquiry/inquiryReg.jsp?error"; 
@@ -132,7 +131,7 @@ public class InquiryController {
 			) throws Exception {		
 		log.info("> InquiryController.inquirys() GET...");	
 		
-		model.addAttribute("inquiry", this.inquiryMapper.getInquirys(memberId));
+		model.addAttribute("inquiry", inquiryMapper.getInquirys(memberId));
 
 		return "inquiry/inquiry.jsp";
 	}

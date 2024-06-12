@@ -1493,10 +1493,42 @@ input[type=radio]:checked+label:before {
 					<fieldset>
 						<legend>1:1 문의 작성</legend>
 						<ul class="tb_lst">
-							<li>
+						  <li>								
+							<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">구매관련문의</h4>
+							<div class="in_td">
+								<form action="inquiry/inquiryReg.jsp" method="post" enctype="multipart/form-data">
+									<input type="radio" id="배송문의" name="buy" value="1" >
+									<label for="배송문의" style="padding-left: 25px;">배송문의</label><br> 
+									
+									<input type="radio" id="주문문의" name="buy" value="2" >
+									<label for="주문문의" style="padding-left: 25px;">주문문의</label><br> 
+									
+									<input type="radio" id="취소문의" name="buy" value="3" >
+									<label for="취소문의" style="padding-left: 25px;">취소문의</label><br>
+											
+									<input type="radio" id="반품문의" name="buy" value="4" >
+									<label for="반품문의" style="padding-left: 25px;">반품문의</label><br>
+        							
+        							<input type="radio" id="교환문의" name="buy" value="5" >
+        							<label for="교환문의" style="padding-left: 25px;">교환문의</label><br>
+
+									<input type="radio" id="환불문의" name="buy" value="6" >
+									<label for="환불문의" style="padding-left: 25px;">환불문의</label><br>
+
+
+									<input type="radio" id="사은품문의" name="buy" value="7" >
+									<label for="사은품문의" style="padding-left: 25px;">사은품문의</label><br> 
+
+									<input type="radio" id="입금문의" name="buy" value="8" >
+									<label for="입금문의" style="padding-left: 25px;">입금문의</label><br>
+
+        
+        							<input type="submit" value="Submit">
+    							</form>
+    					<!-- 	 
 								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">구매관련문의</h4>
 								<div class="in_td">
-									<form action="inquiry.jsp" method="post">
+									<form action="inquiry/inquiryReg.jsp" method="post" enctype="multipart/form-data">
 										<span class="buy_radio">
 											<input type="radio" id="배송문의" name="buy" value="배송문의" >
 											<label for="배송문의" style="padding-left: 25px;">배송문의</label><br> 
@@ -1532,7 +1564,8 @@ input[type=radio]:checked+label:before {
 										
 										<input type="submit" value="Submit">
 									</form>
-								</div>								
+								</div> 
+							-->								
 							</li>
 							<li>
 								<!--라디오 선택시 나타나는 새로운 창-->
@@ -1579,7 +1612,33 @@ input[type=radio]:checked+label:before {
 									</ul>
 								</div>
 							</li>
-							<li>							
+							<li>
+								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">일반상담문의</h4>
+								<div class="in_td">
+									<form action="inquiry.jsp" method="post" enctype="multipart/form-data">
+											<input type="radio" id="회원정보문의" name="general" value="1" >
+											<label for="회원정보문의" style="padding-left: 25px;">회원정보문의</label><br> 
+
+											<input type="radio" id="회원제도문의" name="general" value="2" >
+											<label for="회원제도문의" style="padding-left: 25px;">회원제도문의</label><br> 
+
+											<input type="radio" id="결제방법문의" name="general" value="3" >
+											<label for="결제방법문의" style="padding-left: 25px;">결제방법문의</label><br> 
+
+											<input type="radio" id="상품문의" name="general" value="4" >
+											<label for="상품문의" style="padding-left: 25px;">상품문의</label><br> 
+
+											<input type="radio" id="당첨문의" name="general" value="5" >
+											<label for="당첨문의" style="padding-left: 25px;">당첨문의</label><br> 
+
+											<input type="radio" id="쿠폰/마일리지문의" name="general"  value="6" >
+											<label for="쿠폰/마일리지문의" style="padding-left: 25px;">쿠폰/마일리지문의</label><br> 
+										
+										<input type="submit" value="Submit">
+									</form>
+								
+								</div>
+								<!-- 							
 								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">일반상담문의</h4>
 								<div class="in_td">
 									<form action="inquiry.jsp" method="post">
@@ -1610,7 +1669,8 @@ input[type=radio]:checked+label:before {
 										
 										<input type="submit" value="Submit">
 									</form>
-								</div>								
+								</div>
+								 -->								
 							</li>
 							<li>
 								<div div id="hiddenDiv2" class="hidden">
@@ -1652,6 +1712,31 @@ input[type=radio]:checked+label:before {
 							<li>
 								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">기타문의</h4>
 								<div class="in_td">
+									<form action="inquiry.jsp" method="post" enctype="multipart/form-data">
+											<input type="radio" id="시스템문의" name="etc" value="1" >
+											<label for="시스템문의" style="padding-left: 25px;">시스템문의</label><br> 
+											
+											<input type="radio" id="기타문의" name="etc" value="2" >
+											<label for="기타문의" style="padding-left: 25px;">기타문의</label><br> 
+											
+											<input type="radio" id="증빙서류문의" name="etc" value="3" >
+											<label for="증빙서류문의" style="padding-left: 25px;">증빙서류문의</label><br> 
+											
+											<input type="radio" id="매장문의" name="etc" value="4" >
+											<label for="매장문의" style="padding-left: 25px;">매장문의</label><br> 
+											
+											<input type="radio" id="리뷰재노출문의" name="etc" value="5" >
+											<label for="리뷰재노출문의" style="padding-left: 25px;">리뷰재노출문의</label><br> 
+											
+										<input type="submit" value="Submit">
+									</form>
+									
+								</div>
+								
+							
+							<!-- 							
+								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">기타문의</h4>
+								<div class="in_td">
 									<form action="inquiry.jsp" method="post">
 										<span class="etc_radio">
 											<input type="radio" id="시스템문의" value="시스템문의" >
@@ -1676,14 +1761,18 @@ input[type=radio]:checked+label:before {
 										
 										<input type="submit" value="Submit">
 									</form>
-									<!---->
+									
 								</div>
-							</li>
+								
+								 -->
+							</li>							
 							<li class="user">
 								<h4 class="e1ne7g4m0 css-1guny36 e1vrs9a70" color="secondary">성명</h4>
 								<div class="in_td">
+								<c:forEach items="${ member }" var="memberVO">
 									<p class="txt"></p>
-									조연화
+									${ memberVO.memberName }
+								</c:forEach>
 								</div>	
 							</li>
 							<li class="user_id">
@@ -1729,7 +1818,8 @@ input[type=radio]:checked+label:before {
 										<div class="fileUpload-able" style="display: block;">
 											<label for="file" class="file">
 												<div class="btn-upload">사진파일첨부하기</div>
-											</label> <input type="file" accept="image/*" id="file" multiple="">
+											</label> 
+											<input type="file" accept="image/*" id="file" multiple="">
 										</div>
 									</div>
 									</uio-file-upload>
@@ -1792,6 +1882,7 @@ $(document).ready(function() {
 
 <script>
         document.addEventListener("DOMContentLoaded", function() {
+            /* const radioButtons = document.querySelectorAll('input[id="buy"]'); */
             const radioButtons = document.querySelectorAll('input[name="buy"]');
             const hiddenDiv1 = document.getElementById("hiddenDiv1");
 
@@ -1804,7 +1895,7 @@ $(document).ready(function() {
 </script>
 <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const radioButtons = document.querySelectorAll('input[name="general"]');
+            const radioButtons = document.querySelectors('input[id="상품문의"]');
             const hiddenDiv1 = document.getElementById("hiddenDiv2");
 
             radioButtons.forEach(radio => {

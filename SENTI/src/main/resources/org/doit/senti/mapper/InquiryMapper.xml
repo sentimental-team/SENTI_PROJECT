@@ -24,15 +24,26 @@
 			SELECT NVL(MAX(TO_NUMBER(inquiryId)),0)+1
 			FROM inquiry
 		</selectKey>
+		<!-- <selectKey order="AFTER" resultType="int" keyProperty="buyInquiry">
+			SELECT NVL(buyInquiry, 0)
+			FROM inquiry
+		</selectKey>
+		<selectKey order="AFTER" resultType="int" keyProperty="generalInquiry">
+			SELECT NVL(generalInquiry, 0)
+			FROM inquiry
+		</selectKey>
+		<selectKey order="AFTER" resultType="int" keyProperty="etcInquiry">
+			SELECT NVL(etcInquiry, 0)
+			FROM inquiry
+		</selectKey> -->
 		INSERT INTO inquiry
 		(inquiry_id, inquiry_title, inquiry_content,inquiry_date
-		, inquiryImage, buy_inquiry, general_inquiry_id, etc_inquiry, member_id)
+		, inquiryImage, buy_inquiry, general_inquiry, etc_inquiry, member_id)
 		VALUES(
 			(SELECT NVL(MAX(TO_NUMBER(inquiryId)),0)+1 FROM inquiry), #{inquiryTitle}, #{inquiryContent} , SYSDATE
-			, #{inquiryImage, javaType=String, jdbcType=VARCHAR}}, #{buyInquiry}, #{generalInquiryId}, #{etcInquiry}, #{memberId}
+			, #{inquiryImage, javaType=String, jdbcType=VARCHAR}}, #{buyInquiry}, #{generalInquiry}, #{etcInquiry}, #{memberId}
 			)
 	</insert>
-
 
 
 	<!-- // 문의내역의 목록을 List 컬렉션으로 반환하는 메서드 public List<InquiryVO> getInquirys( 

@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../inquiry/inquiry.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <style>
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p,
@@ -826,8 +825,9 @@ a, button {
 						</div>
 						<div class="pc_view">
 							<div class="write_btnbx">
-								<a class="btn_black" href="/inquiry/inquiryReg.do">1:1문의 쓰기 수정 후</a>
-								<a class="btn_black" href="/inquiry/inquiryReg2.do">수정 전</a>
+								<a class="btn_black" href="/inquiry/inquiryReg.do">1:1문의 쓰기
+									수정 후</a> <a class="btn_black" href="/inquiry/inquiryReg2.do">수정
+									전</a>
 							</div>
 						</div>
 					</div>
@@ -840,8 +840,9 @@ a, button {
 								<th class="title">상담제목</th>
 								<th class="date">작성일</th>
 								<th class="state">답변유무</th>
-								<th class="tblbtn"><span class="blind" hidden="삭제">
-								</span></th>
+								<th class="tblbtn" hidden="삭제">
+									<!-- <th class="tblbtn"><span class="blind" hidden="삭제"> --> </span>
+								</th>
 							</tr>
 						</thead>
 						<tbody class="my_tbl_content">
@@ -851,12 +852,16 @@ a, button {
 										<tr class="my_tbl_content">
 											<td class="inquiryId">${ InquiryVO.inquiryId }</td>
 											<td class="type">${ InquiryVO.generalInquiryId }</td>
-											<td class="title">${ InquiryVO.inquiryTitle }</td>
+											<td class="title"><a onclick="title">${ InquiryVO.inquiryTitle }</a></td>
 											<td class="date"><fmt:formatDate
 													value="${ InquiryVO.inquiryDate }" pattern="yyyy-MM-dd" /></td>
-											<td class="state">아직...</td>
-											<th class="tblbtn"><span class="blind" hidden="삭제">삭제</span>
-											</th>
+											<td class="en6mg293 css-1l8qa95 e4b5pod0"><span
+												class="en6mg296 css-iuu3r9 e1vrs9a70" color="primary">NO</span>
+											</td>
+											<td class="en6mg293 css-funda3 e4b5pod0">
+												<!-- <button class="css-1a57md6 en6mg298">삭제</button> -->
+												<a href="/inquiry/delete?inquiryId=${InquiryVO.inquiryId}&filesrc=${InquiryVO.filesrc}">Delete</a>
+											</td>											
 										</tr>
 									</c:forEach>
 								</c:when>
@@ -869,34 +874,79 @@ a, button {
 								</c:otherwise>
 							</c:choose>
 
-							<table id="postsInquiry" border="1">
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Image</th>
-										<th>Date</th>
-										<th>Content</th>
-									</tr>
-								</thead>
-								<tbody>
-									<!-- Data will be appended here -->
-									<th>Title</th>
-									<th>Image</th>
-									<th>Date</th>
-									<th>Author</th>
-									<th>Content</th>
-								</tbody>
-							</table>
+								
+
+						<%-- 	
+						<tbody>
+							<c:forEach var="inquiry" items="${inquiries}">
+								<tr>
+									<td>${inquiry.inquiryTitle}</td>
+									<td><img src="/inquiry/upload/${inquiry.inquiryImage}"
+										alt="${inquiry.inquiryTitle}" width="100"></td>
+									<td>${inquiry.inquiryDate}</td>
+									<td>${inquiry.memberId}</td>
+									<td>${inquiry.inquiryContent}</td>
+									<td><a
+										href="/inquiry/delete?inquiryId=${inquiry.inquiryId}&filesrc=${inquiry.inquiryImage}">Delete</a></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+ 						--%>
 
 						</tbody>
+						<tfoot>
+							
+						</tfoot>
 
 					</table>
-
-					<ruler-basic-pagination> </ruler-basic-pagination>
+					
 				</section>
+				
+				<!--라디오 선택시 나타나는 새로운 창-->
+								<div id="hiddenDiv1" class="hidden">
+									<ul class="clear">
+										<li class="order_no ng-star-inserted">
+											<div class="in_td">
+												<strong class="type">주문번호</strong>
+											</div>
+											<div class="in_td orderno_td">
+											
+												<input type="text" id="orderNo"
+													formcontrolname="order_serial" placeholder=" "
+													class="ng-untouched ng-pristine" style="position: inherit;">
+
+												<button type="button" class="btn btn_bor">번호 조회</button>
+
+											</div>
+											<div class="in_td">
+												<strong class="type">상품명</strong>
+											</div>
+
+											<div class="in_td ng-star-inserted">
+												<!---->
+											</div> <!----> <!---->
+										</li>
+										
+										<li class="order_no order_bx ng-star-inserted">
+											<div class="in_td">
+												<strong class="type">주문일자</strong>
+											</div>
+											<div class="in_td">
+												<p class="txt"></p>
+
+											</div>
+											<div class="in_td">
+												<strong class="type">결제방법</strong>
+											</div>
+											<div class="in_td">
+												<p class="txt"></p>
+
+											</div>
+										</li>
+									</ul>
+								</div>
 
 			</ul>
-
 
 		</div>
 	</div>
@@ -906,6 +956,7 @@ a, button {
 		<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 	</footer>
 </body>
+<!-- 
 <script>
 $(document).ready(function() {
     $('.css-140aynn').click(function() {
@@ -921,5 +972,19 @@ $(document).ready(function() {
         }
     });
 });
+</script>
+ -->
+
+<script>
+        document.addEventListener("onclick", function() {
+            const titleClick = document.querySelectorAll('a[onclick="title"]');
+            const hiddenDiv1 = document.getElementById("hiddenDiv1");
+
+            titleClick.forEach(onclick => {
+            	onclick.addEventListener("change", function() {
+                    hiddenDiv1.classList.remove("hidden");
+                });
+            });
+        });
 </script>
 </html>
