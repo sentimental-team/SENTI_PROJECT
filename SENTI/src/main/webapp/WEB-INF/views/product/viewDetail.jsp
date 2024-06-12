@@ -46,6 +46,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--    
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                                 <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291111100"
@@ -72,6 +73,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                         class="css-1eew7kn eq96xsv3">스테이셔너리</a></li>
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
                 <li class="css-wb64ex ehh6z822">
@@ -85,6 +87,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <circle class="ctgr4" stroke="#000000" stroke-width="2" cx="12" cy="12" r="10"></circle>
                                 </g>
                             </svg></div>
+                        <!--     
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
                                 <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107101"
@@ -105,6 +108,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                         class="css-1eew7kn eq96xsv3">프레그런스 액세서리</a></li>
                             </ul>
                         </div>
+                         -->
                     </div>
                 </li>
             </ul>
@@ -1004,7 +1008,7 @@ $(document).ready(function() {
 	                url: "/user/cartAdd.do",
 	                contentType: "application/json",
 	                data: JSON.stringify(cartDTO),
-	                success: function(response) {
+	                success: function() {
 	                    alert("상품이 장바구니에 추가되었습니다.");
 	                    
 	                    let confirmMove = confirm("장바구니로 이동하시겠습니까 ?");
