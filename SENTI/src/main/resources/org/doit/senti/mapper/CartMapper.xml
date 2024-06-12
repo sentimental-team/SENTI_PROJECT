@@ -132,11 +132,6 @@ WHERE
 	    </foreach>
     
 	</select>
-	
-	
-	
-	
-	
 
 </mapper>
  

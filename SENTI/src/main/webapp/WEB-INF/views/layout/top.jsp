@@ -600,12 +600,12 @@ button {
                         </a>
                      </li>
                      <li class="my-page1"><a class="my-page2"
-                        href="${pageContext.request.contextPath}mypage/mypage.do"> <i class="my-icon"></i>
+                        href="/user/mypage.do"> <i class="my-icon"></i>
                            <strong class="my-page-text">MY PAGE</strong>
                      </a>
                      </li>
                      <li class="my-like1"><a class="my-like2"
-                        href="#"> <i
+                        href="/user/mylike.do"> <i
                            class="like-icon"></i> <strong class="my-like-text">MY
                               LIKE</strong>
                      </a></li>
@@ -1211,13 +1211,6 @@ $("#third-2").on("click",function(){
      }) 
  });
  
- $(".my-like2").on("click", function(){
-    alert("미구현")
- })
- 
- $(".mid-a").on("click", function(){
-	 alert("미구현")
- })
 // script.js
 document.querySelector('.search-btn').addEventListener('click', function() {
     document.getElementById('searchModal').style.display = 'block';

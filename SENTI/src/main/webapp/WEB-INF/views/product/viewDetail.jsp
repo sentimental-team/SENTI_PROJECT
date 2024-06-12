@@ -17,6 +17,33 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <header>
 	<jsp:include page="/WEB-INF/views/layout/top.jsp" flush="false"></jsp:include>
 </header>
+<style>
+ .reviewForm {
+    display: inline-block; 
+    direction: rtl; /* 이모지 순서 반전 */
+    border: 0; 
+  }
+  .reviewForm input[type=radio]{
+    display: none; 
+  }
+  .reviewForm label:hover{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 */
+  }
+  .reviewForm label:hover ~ label{
+    text-shadow: 0 0 0 #a00; /* 마우스 호버 뒤에오는 이모지들 */
+  }
+  
+  .reviewForm svg:hover #star{
+    fill:#000000;
+  }
+  .reviewForm label:hover ~ label #star{
+    fill:#000000;
+  }
+  .reviewForm input[type=radio]:checked ~ label #star{
+     fill:#000000;
+  }
+ 
+</style>
 <body>
     <div class="css-zqyuit e1uo4o523">	<!-- 위에 버튼 3개 부분.  -->
         <div class="css-0 ehh6z820">
@@ -49,28 +76,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         <!--    
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291111100"
-                                        class="css-1eew7kn eq96xsv3">비앤비이탈리아</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291114100"
-                                        class="css-1eew7kn eq96xsv3">침구</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291112100"
-                                        class="css-1eew7kn eq96xsv3">홈패브릭</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291103100"
-                                        class="css-1eew7kn eq96xsv3">가구</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291104100"
-                                        class="css-1eew7kn eq96xsv3">조명</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291105100"
-                                        class="css-1eew7kn eq96xsv3">홈데코</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291106100"
-                                        class="css-1eew7kn eq96xsv3">가드닝</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100"
-                                        class="css-1eew7kn eq96xsv3">홈프레그런스</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291109100"
-                                        class="css-1eew7kn eq96xsv3">아트,디자인</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291113100"
-                                        class="css-1eew7kn eq96xsv3">책,음반</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291110100"
-                                        class="css-1eew7kn eq96xsv3">스테이셔너리</a></li>
+                               
                             </ul>
                         </div>
                          -->
@@ -90,22 +96,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         <!--     
                         <div class="css-qoulyp eq96xsv2">
                             <ul>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107101"
-                                        class="css-1eew7kn eq96xsv3">인센스</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107102"
-                                        class="css-1eew7kn eq96xsv3">캔들</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107103"
-                                        class="css-1eew7kn eq96xsv3">디퓨저</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107104"
-                                        class="css-1eew7kn eq96xsv3">룸스프레이</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107105"
-                                        class="css-1eew7kn eq96xsv3">아로마,에센셜 오일</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107109"
-                                        class="css-1eew7kn eq96xsv3">홀더,트레이</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107106"
-                                        class="css-1eew7kn eq96xsv3">점화도구</a></li>
-                                <li><a href="https://www.29cm.co.kr/shop/category/list?category_large_code=291100100&amp;category_medium_code=291107100&amp;category_small_code=291107107"
-                                        class="css-1eew7kn eq96xsv3">프레그런스 액세서리</a></li>
+                              
                             </ul>
                         </div>
                          -->
@@ -129,9 +120,8 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                             style="transform: translateX(0px);">
                             <li class="splide__slide css-1vt3f8z enepqhc2 is-active is-visible" id="splide01-slide01"
                                 role="tabpanel" aria-roledescription="slide" aria-label="1 of 5">
-                                <div class="css-122y91a enepqhc4"><img
-                                        src="${pDetail. pdImageUrl}"
-                                        alt="" loading="eager" class="css-12qah06 enepqhc5"></div>
+                                <div class="css-122y91a enepqhc4"><img src="${pDetail. pdImageUrl}"  alt="" loading="eager" class="css-12qah06 enepqhc5">
+                               </div>
                             </li>
                             <li class="splide__slide css-1vt3f8z enepqhc2 is-next" id="splide01-slide02" r   ole="tabpanel"
                                 aria-roledescription="slide" aria-label="2 of 5" aria-hidden="true">
@@ -527,7 +517,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                 <button class="reviewWrite" type="button">REVIEW쓰기</button>
 			</div>
 			<!-- --------------------------------------------------------------------------------------------------------------- -->
-					<form action="/viewDetail/review.do" method="post" enctype="multipart/form-data">
+					<form action="/viewDetail/review.do" method="post" enctype="multipart/form-data" >
 					<div class="reviewBox">
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">아이디</h2>
@@ -539,7 +529,38 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 					<div class="reviewMbox">
 						<h2 class="reviewSbox">상품별점</h2>
 						<div class="reviewSquare">
-							<span class="reviewID">별점 어케 줌,,</span>
+							<span class="reviewID" ><fieldset class="reviewForm">
+        <input type="radio" name="rating" value="5" id="rate1"><label for="rate1"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="4" id="rate2"><label for="rate2"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio"" name="rating" value="3" id="rate3"><label for="rate3"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="2" id="rate4"><label for="rate4"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+        <input type="radio" name="rating" value="1" id="rate5"><label for="rate5"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="14.4" height="14.4" viewBox="0 0 13 12">
+                                <path  id="star"  fill="#d4d4d4" fill-rule="evenodd" stroke="#d4d4d4" stroke-width="0.7"
+                                    d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z">
+                                </path>
+                            </svg></label>
+    </fieldset></span>
 						</div>
 					</div>
 					<div class="reviewMbox">
@@ -697,7 +718,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                         </div>
                     </li>
                     </c:forEach>
-                    <!-- ---------------------  페이징 처리 ----------------------  -->
+                    <!-- ---------------------  리뷰페이징 처리 ----------------------  -->
                    </ul>
                  </div>
                  <div >
@@ -1062,6 +1083,8 @@ $("#option2").on("click", function(event){
    	           
    	              
    	     });
+   	        
+	   
 </script>
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>

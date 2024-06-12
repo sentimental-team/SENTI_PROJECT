@@ -1,16 +1,20 @@
 package org.doit.senti.controller.board;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.doit.senti.domain.board.BoardVO;
+import org.doit.senti.domain.board.ProductCategoryDTO;
 import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.mapper.BoardMapper;
+import org.doit.senti.mapper.CategoryMapper;
 import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +35,33 @@ public class RESTController {
 	@Autowired
 	private LikeService likeService;
 	
+	@Autowired
+	private CategoryMapper categoryMapper;
+	
 	@PostMapping(value = "/men_ci.do"
 			,produces = {					
 			MediaType.APPLICATION_JSON_UTF8_VALUE
 			
 	})
-	public List<BoardVO> selectByMediumCtgrId(@RequestBody BoardVO boardvo) {
+	public List<BoardVO> selectByMediumCtgrId(@RequestBody BoardVO boardvo) throws Exception {
 		
-		return this.boardMapper.selectByMediumCtgrId(boardvo.getMediumCtgrId());
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardMapper.selectByMediumCtgrId(boardvo.getMediumCtgrId());
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	     }
+		
+		return productList;
 	}
 	
 	@PostMapping(value = "/men_si.do"
@@ -46,9 +69,25 @@ public class RESTController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE
 			
 	})
-	public List<BoardVO> selectBySmallCtgrId(@RequestBody BoardVO boardvo) {
-
-		return this.boardMapper.selectBySmallCtgrId(boardvo.getSmallCtgrId());
+	public List<BoardVO> selectBySmallCtgrId(@RequestBody BoardVO boardvo) throws Exception {
+		
+		String loginMemberId = "jindol@naver.com";
+		
+	     List<BoardVO> productList = boardMapper.selectBySmallCtgrId(boardvo.getSmallCtgrId());
+	     for (BoardVO product : productList){
+	    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+	    	 
+	    	 likeDTO.setPdId(product.getPdId());
+	    	 likeDTO.setLoginMemberId(loginMemberId);
+	    	 
+	    	 int likeCount = likeService.getLikeCount(product.getPdId());
+	    	 int result = likeService.checkLike(likeDTO);
+	    	 
+	    	 product.setLikeCheck(result);
+	    	 product.setPdLikeCount(likeCount);
+	     }
+		
+		return productList;
 	}
 	
 	@PostMapping(value = "/men_oi.do"
@@ -88,7 +127,42 @@ public class RESTController {
 		
 	}
 	
-	 
+	@PostMapping(value = "/largeCtgr.do" 
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getLargeCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int mainCtgrId = pcDTO.getMainCtgrId();
+		
+		return this.categoryMapper.getLargeCtgr(mainCtgrId);
+		
+	}
+	
+	@PostMapping(value = "/mediumCtgr.do"
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getMediumCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int largeCtgrId = pcDTO.getLargeCtgrId();
+		
+		return this.categoryMapper.getMediumCtgr(largeCtgrId);
+		
+	}
+	
+	@PostMapping(value = "/smallCtgr.do"
+				,produces = {					
+						MediaType.APPLICATION_JSON_UTF8_VALUE
+				})
+	public List<ProductCategoryDTO> getSmallCtgr(@RequestBody ProductCategoryDTO pcDTO) throws Exception {
+		
+		int mediumCtgrId = pcDTO.getMediumCtgrId();
+		
+		return this.categoryMapper.getSmallCtgr(mediumCtgrId);
+		
+	}
+	
 	
 	
 }///

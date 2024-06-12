@@ -27,12 +27,5 @@ public class CartDTO {
 	// deleteCart
 	private int cartId;
 	
-	
-	  
-	  
-	  
-	
-	
-	
 	// 주문쪽 결제 부분
 }

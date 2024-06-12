@@ -1690,7 +1690,7 @@ img {
 										<div class="sec2-coupon-item-info5-price">
 											<span class="sec2-coupon-item-info5-price-span" data-pdPrice="${list.pdPrice }">
 												<fmt:formatNumber pattern="###,###" value="${list.pdPrice }" /> 원
-											</span> / <span class="sec2-coupon-item-info5-price-span">${list.stock }</span>
+											</span> &nbsp; / &nbsp; <span class="sec2-coupon-item-info5-price-span">수량 : ${list.stock } 개</span>
 										</div>		
 									</div>
 								</div>
