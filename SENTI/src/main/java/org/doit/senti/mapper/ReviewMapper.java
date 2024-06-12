@@ -26,4 +26,8 @@ public interface ReviewMapper {
 	// 리뷰 삭제
 	public int reviewDelete(int pd_id)throws ClassNotFoundException, SQLException;
 	
+	// 로그인한 계정 해당 상품 리뷰쓸 결제내역 확인
+	
+	// 
+	
 }
