@@ -109,7 +109,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 13 12" class="css-ik4rmz e1f8g7yn1">
                                         <path d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z" fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5"></path>
                                     </svg>
-                                    <div class="review-count">평점 준 사람들 카운팅 하는 쿼리문 필요함</div>
+                                    <div class="review-count">${list.reviewCnt }</div>
                                 </a>
                             </div>
                         </div>
