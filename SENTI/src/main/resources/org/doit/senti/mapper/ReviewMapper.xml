@@ -20,7 +20,8 @@
   
   <!-- public int reviewInsert(ReviewVO review) throws ClassNotFoundException, SQLException; -->
   <insert id="reviewInsert">
-    INSERT review 
+    INSERT INTO review ( review_id, review_content, review_rating, pay_id <if test="imageUrl != null">, image_url</if>)
+    VALUES ( (SELECT NVL(MAX(review_id),0)+1 FROM review, #{reviewContent}, #{reviewRating}, #{payId} <if test="imageUrl != null">, #{imageUrl}</if> )
   </insert>
   
   <!-- public int reviewUpdate(ReviewVO review)throws ClassNotFoundException, SQLException; -->
