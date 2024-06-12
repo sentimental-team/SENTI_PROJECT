@@ -45,10 +45,13 @@ public class BoardVO {
 	private int pdLikeCount;
 	private int likeCheck;
 	
+<<<<<<< HEAD
+=======
 	// 리뷰 갯수, 리뷰 평점
 	private int reviewCnt;
 	private int reviewAvg;
 
+>>>>>>> ae4179a0b529a6d09c4739046fdc1516d171e2cf
 	//
 	private String selectOption;
 	

@@ -1211,13 +1211,6 @@ $("#third-2").on("click",function(){
      }) 
  });
  
- $(".my-like2").on("click", function(){
-    alert("미구현")
- })
- 
- $(".mid-a").on("click", function(){
-	 alert("미구현")
- })
 // script.js
 document.querySelector('.search-btn').addEventListener('click', function() {
     document.getElementById('searchModal').style.display = 'block';
