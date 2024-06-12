@@ -335,11 +335,13 @@
             </div>
         </div>
     </section>
+    <input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 </div>
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 </footer>
 <script>
+const csrfToken = $('#csrf_token').val();
 $('.btn_del').on('click', function(){
 	let pdId = $(this).data("pdid");
 		
@@ -349,6 +351,9 @@ $('.btn_del').on('click', function(){
 		data: JSON.stringify({pdId: pdId}),
 		contentType: 'application/json; charset=utf-8',
         cache: false,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        },
         success: function() {
                console.log("좋아요 삭제");
                location.reload()
@@ -370,6 +375,9 @@ $('.heart').on('click', function(){
 		data: JSON.stringify({pdId: pdId}),
 		contentType: 'application/json; charset=utf-8',
         cache: false,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        },
         success: function() {
                console.log("좋아요 삭제");
                location.reload()

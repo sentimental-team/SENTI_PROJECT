@@ -736,13 +736,13 @@ button {
                                     <div class="category">
                                       <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=13"class="category">원피스</a></div>
                                     <div class="category">
-                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=15"class="category">스커트</a></div>
+                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=14"class="category">스커트</a></div>
                                     <div class="category">
                                       <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=16"class="category">점프수트</a></div>
                                     <div class="category">
-                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=17"class="category">셋업</a></div>
+                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=15"class="category">셋업</a></div>
                                     <div class="category">
-                                      <a  href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=18"class="category">액티브웨어</a></div>
+                                      <a  href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=17"class="category">액티브웨어</a></div>
                                        <!---->
                                  </div>
                            <div  class="menu_category">

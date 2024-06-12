@@ -124,8 +124,11 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         </ul> 
     </div>
 </div>
+<input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 
 <script>
+const csrfToken = $('#csrf_token').val();
+// alert(csrfToken);
 $(document).ready(function() {
     // Medium 카테고리 클릭 이벤트
     $(".medium_ctgr_id111").on("click", function(event) {
@@ -138,6 +141,9 @@ $(document).ready(function() {
             data: JSON.stringify({ mediumCtgrId: selectedMedium_ctgr_id }),
             contentType: 'application/json; charset=utf-8',
             cache: false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function(data) {
                 var addedCategories = {};
                 $(".aa").empty();
@@ -223,6 +229,9 @@ $(document).ready(function() {
             data: JSON.stringify({ smallCtgrId: selectedSmall_ctgr_id }),
             contentType: 'application/json; charset=utf-8',
             cache: false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function(data) {
                 $(".photo_list").empty();
                 $(data).each(function(index, element) {
@@ -301,6 +310,9 @@ $('.heart').on('click', function(){
 			data: JSON.stringify({pdId: pdId}),
 			contentType: 'application/json; charset=utf-8',
 	        cache: false,
+	        beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
 	        success: function() {
                 console.log("좋아요 추가");
                 $(this).children('svg').attr('class', 'bi-suit-heart-fill');
@@ -323,6 +335,9 @@ $('.heart').on('click', function(){
 			data: JSON.stringify({pdId: pdId}),
 			contentType: 'application/json; charset=utf-8',
 	        cache: false,
+	        beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
 	        success: function() {
                 console.log("좋아요 삭제");
                 $(this).children('svg').attr('class', 'bi-suit-heart');
@@ -351,6 +366,9 @@ function clickHeart(button) {
             data: JSON.stringify({ pdId: pdId }),
             contentType: 'application/json; charset=utf-8',
             cache: false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function() {
                 console.log("좋아요 추가");
                 $(button).children('svg').attr('class', 'bi-suit-heart-fill');
@@ -372,6 +390,9 @@ function clickHeart(button) {
             data: JSON.stringify({ pdId: pdId }),
             contentType: 'application/json; charset=utf-8',
             cache: false,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
             success: function() {
                 console.log("좋아요 삭제");
                 $(button).children('svg').attr('class', 'bi-suit-heart');
@@ -387,89 +408,8 @@ function clickHeart(button) {
 }
 
 </script>
-<script>
-function updateProductList() {
-    event.preventDefault();
-    let selectedMedium_ctgr_id = $(this).val();
-    $.ajax({
-        url: "/product/men_ci.do",
-        dataType: "json",
-        type: "POST",
-        data: JSON.stringify({ mediumCtgrId: selectedMedium_ctgr_id }),
-        contentType: 'application/json; charset=utf-8',
-        cache: false,
-        success: function(data) {
-            var addedCategories = {};
-            $(".aa").empty();
-            $(".photo_list").empty();
-            $(data).each(function(index, element) {
-            	let heartIcon = element.likeCheck > 0 
-                ? `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
-                        viewBox="0 0 20 20" class="bi-suit-heart-fill">
-                        <path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
-                        fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
-                    </svg>`
-                : `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
-                        viewBox="0 0 20 20" class="bi-suit-heart">
-                        <path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z"
-                            fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5" />
-                    </svg>`;
-                if (!addedCategories[element.smallCtgrId]) {
-                    $(".aa").append(`
-                        <li class="right_radio" value="\${element.smallCtgrId}">
-                            <a href="#" class="right_radio_a">\${element.smallCtgrName}</a>
-                        </li>
-                    `);
-                    addedCategories[element.smallCtgrId] = true;
-                }
-                $(".photo_list").append(`
-                    <li class="photo1">
-                        <div class="cc">
-                            <a href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">
-                                <div class="dd">
-                                    <img alt="" src="\${element.pdImageUrl}" class="ff">
-                                </div>
-                            </a>
-                            <div class="gg">
-                                <a class="hh" href="/product/viewDetail.do?pd_id=\${element.pdId}&large_ctgr_id=\${element.largeCtgrId}">\${element.brandName}</a>
-                                <a title="${element.pdName}">
-                                    <div class="j">
-                                        <h5 class="jj">\${element.pdName} (10 Color)</h5>
-                                        <strong class="jjj"></strong>
-                                        <div class="01">
-                                            <span class="kkk"></span>
-                                            <strong class="qqq">\${element.pdPrice.toLocaleString('ko-KR')}원</strong>
-                                        </div>
-                                        <ul class="eee">
-                                            <li class="yyy"></li>
-                                            <li></li>
-                                        </ul>
-                                    </div>
-                                </a>
-                                <div class="ppp">
-                                <button  class="heart" data-pdid="\${element.pdId }" onclick="clickHeart(this)">
-                                    \${heartIcon}
-                                <h5 class="jj">\${element.pdLikeCount}</h5>
-                                </button>
-                                    <a href="#" class="review">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 13 12" class="css-ik4rmz e1f8g7yn1">
-                                            <path d="M4.146 3.95L0 4.583l3 3.075L2.292 12 6 9.95 9.708 12 9 7.658l3-3.075-4.146-.633L6 0z" fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5"></path>
-                                        </svg>
-                                        <div class="review-count">${element.pdGrade}</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                `);
-            });
-        },
-        error: function() {
-            alert("error");
-        }
-    });
-});
-</script>
+
+
 
 <footer>
     <jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>

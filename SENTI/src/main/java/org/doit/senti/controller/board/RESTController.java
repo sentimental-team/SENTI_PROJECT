@@ -1,6 +1,5 @@
 package org.doit.senti.controller.board;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,8 +12,9 @@ import org.doit.senti.mapper.CategoryMapper;
 import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +45,10 @@ public class RESTController {
 	})
 	public List<BoardVO> selectByMediumCtgrId(@RequestBody BoardVO boardvo) throws Exception {
 		
-		String loginMemberId = "jindol@naver.com";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
 		
 	     List<BoardVO> productList = boardMapper.selectByMediumCtgrId(boardvo.getMediumCtgrId());
 	     for (BoardVO product : productList){
@@ -71,7 +74,10 @@ public class RESTController {
 	})
 	public List<BoardVO> selectBySmallCtgrId(@RequestBody BoardVO boardvo) throws Exception {
 		
-		String loginMemberId = "jindol@naver.com";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
 		
 	     List<BoardVO> productList = boardMapper.selectBySmallCtgrId(boardvo.getSmallCtgrId());
 	     for (BoardVO product : productList){
@@ -108,7 +114,13 @@ public class RESTController {
 		System.out.println("addLikeController : " + bvo.getPdId());
 		ProductLikeDTO likeDTO = new ProductLikeDTO();
 		likeDTO.setPdId(bvo.getPdId());
-		likeDTO.setMemberId("jindol@naver.com"); // 나중에 세션에서 가져와야함
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
+		likeDTO.setLoginMemberId(loginMemberId);
+		
 		
 		likeService.insertProductLike(likeDTO);
 		
@@ -121,7 +133,11 @@ public class RESTController {
 		System.out.println("removeLikeController : " + bvo.getPdId());
 		ProductLikeDTO likeDTO = new ProductLikeDTO();
 		likeDTO.setPdId(bvo.getPdId());
-		likeDTO.setMemberId("jindol@naver.com");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
+		likeDTO.setLoginMemberId(loginMemberId);
 		
 		likeService.deleteProductLike(likeDTO);
 		

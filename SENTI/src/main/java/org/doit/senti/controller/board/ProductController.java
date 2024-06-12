@@ -20,6 +20,9 @@ import org.doit.senti.mapper.ReviewMapper;
 import org.doit.senti.service.board.BoardService;
 import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -179,7 +182,10 @@ public class ProductController {
 		
 		log.info("> BoardController.list()...");
 		
-		String loginMemberId = "jindol@naver.com";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
 		
 	     List<BoardVO> productList = boardService.getList(medium_ctgr_id);
 	     for (BoardVO product : productList){
@@ -201,7 +207,9 @@ public class ProductController {
 	    	 product.setReviewCnt(reviewCnt);
 
 	     }
-
+	     
+	     System.out.println(loginMemberId);
+	     
 	      model.addAttribute("mList",this.boardService.mList(large_ctgr_id));
 	      // model.addAttribute("list",  this.boardService.getList(medium_ctgr_id));
 	      model.addAttribute("list",  productList);
