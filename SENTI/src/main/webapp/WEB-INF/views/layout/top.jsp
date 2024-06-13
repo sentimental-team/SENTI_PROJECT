@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <html>
 <style>
@@ -589,6 +590,12 @@ button {
    <div class="head">
       <header class="head-main">
          <div class="head-main1">
+         	<!-- 로그아웃 성공 메시지 삽입 -->
+            <c:if test="${param.logout != null}">
+                <div class="alert alert-success">
+                    로그아웃이 성공적으로 완료되었습니다.
+                </div>
+            </c:if>
             <div class="head-main1">
                <div class="logo">
                   <a class="logo-main" href="/main.do">29CM</a>
@@ -616,20 +623,26 @@ button {
                      </a></li>
                      <!-- 로그인 상태에 따라 로그인/로그아웃 버튼 표시 -->
                      <!-- 로그인 여부에 따라 로그인 또는 로그아웃 버튼을 동적으로 표시합니다. -->
-                     <c:choose>
-                         <c:when test="${not empty sessionScope.memberEmail}">
-                             <li class="logout1"><a class="logout2" href="/sentiBoard/user/logout.do">
-                                 <i class="logout-icon"></i>
-                                 <strong class="my-logout-text">LOGOUT</strong>
-                             </a></li>
-                         </c:when>
-                         <c:otherwise>
-                             <li class="logout1"><a class="logout2" href="${pageContext.request.contextPath}signUp/login.do">
-                                 <i class="logout-icon"></i>
-                                 <strong class="my-logout-text">LOGIN</strong>
-                             </a></li>
-                         </c:otherwise>
-                     </c:choose>
+                     <sec:authorize access="isAnonymous()">
+					    <li class="logout1">
+					        <a class="logout2" href="${pageContext.request.contextPath}/signUp/login.do">
+					            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					            <i class="logout-icon"></i>
+					            <strong class="my-logout-text">LOGIN</strong>
+					        </a>
+					    </li>
+					</sec:authorize>
+					<sec:authorize access="isAuthenticated()">
+					    <li class="logout1">
+					        <form action="${pageContext.request.contextPath}/signUp/logout.do" method="post" style="display:inline;">
+					            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+					            <button type="submit" class="logout2" style="background:none; border:none; padding:0; cursor:pointer;">
+					                <i class="logout-icon"></i>
+					                <strong class="my-logout-text">LOGOUT</strong>
+					            </button>
+					        </form>
+					    </li>
+					</sec:authorize>
                   </ul>
                </div>
                <div class="head-mid">
@@ -723,13 +736,13 @@ button {
                                     <div class="category">
                                       <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=13"class="category">원피스</a></div>
                                     <div class="category">
-                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=15"class="category">스커트</a></div>
+                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=14"class="category">스커트</a></div>
                                     <div class="category">
                                       <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=16"class="category">점프수트</a></div>
                                     <div class="category">
-                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=17"class="category">셋업</a></div>
+                                      <a href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=15"class="category">셋업</a></div>
                                     <div class="category">
-                                      <a  href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=18"class="category">액티브웨어</a></div>
+                                      <a  href="/product/men.do?large_ctgr_id=1&medium_ctgr_id=17"class="category">액티브웨어</a></div>
                                        <!---->
                                  </div>
                            <div  class="menu_category">

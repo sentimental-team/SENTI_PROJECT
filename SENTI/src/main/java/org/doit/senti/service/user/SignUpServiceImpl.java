@@ -24,6 +24,7 @@ public class SignUpServiceImpl implements SignUpService {
 	public void join(MemberVO member) {
 		log.info("> SignUpServiceImpl.join()...");
 		this.signUpMapper.insert(member);
+		this.signUpMapper.insertAuthority(member);  // 사용자 권한 추가
 	}
 	
 	

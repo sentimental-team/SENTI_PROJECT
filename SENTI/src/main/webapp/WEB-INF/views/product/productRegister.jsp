@@ -160,11 +160,13 @@
             <button type="submit" href="/main.do">취소</button>
         </form>
     </div>
+    <input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 </body>
  <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 </footer>
 <script>
+	const csrfToken = $('#csrf_token').val();
     $(document).ready(function() {
         $(".main_category").on("change", function() {
             // 선택된 옵션의 값을 가져옴
@@ -176,6 +178,9 @@
             	data: JSON.stringify({mainCtgrId: selectedMainCategoryId}),
             	contentType : 'application/json; charset=utf-8',
             	cache: false,
+            	beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                },
             	success: function(data){
             		$(".large_category").empty();
             		$.each(data, function(index, element) {
@@ -194,7 +199,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $(".large_category").on("change", function() {
+        $(".large_category").on("click", function() {
             // 선택된 옵션의 값을 가져옴
             let selectedLargeCategoryId = $(this).val();
             // alert("선택된 Main Category ID: " + selectedMainCategoryId);
@@ -204,6 +209,9 @@
             	data: JSON.stringify({largeCtgrId: selectedLargeCategoryId}),
             	contentType : 'application/json; charset=utf-8',
             	cache: false,
+            	beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                },
             	success: function(data){
             		$(".medium_category").empty();
             		$.each(data, function(index, element) {
@@ -222,7 +230,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $(".medium_category").on("change", function() {
+        $(".medium_category").on("click", function() {
             // 선택된 옵션의 값을 가져옴
             let selectedMediumCategoryId = $(this).val();
             // alert("선택된 Main Category ID: " + selectedMediumCategoryId);
@@ -232,6 +240,9 @@
 	            	data: JSON.stringify({mediumCtgrId: selectedMediumCategoryId}),
 	            	contentType : 'application/json; charset=utf-8',
 	            	cache: false,
+	            	beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	                },
 	            	success: function(data){
 	            		$(".small_category").empty();
 	            		$.each(data, function(index, element) {
