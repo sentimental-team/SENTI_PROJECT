@@ -314,20 +314,23 @@
     </ul>
 
     <ruler-basic-pagination _ngcontent-yow-c164="" _nghost-yow-c98="">
-    <div _ngcontent-yow-c98="" class="custom-pagination ng-star-inserted">
-    <span _ngcontent-yow-c98="" class="pagination-previous disabled">
-    </span>
-
-    <span _ngcontent-yow-c98="" class="num current ng-star-inserted">
-        <span _ngcontent-yow-c98="" class="ng-star-inserted">
-            1
-        </span>
-    </span>
-
-    <span _ngcontent-yow-c98="" class="pagination-next disabled">
-        
-    </span>
-</div>
+    <tr>
+      		<td colspan="5">
+      			<div class="center">
+      				<div class="pagination">
+      					<c:if test="${pageMaker.prev }">
+      						<a href="${pageMaker.startPage-1 }">&laquo;</a>
+      					</c:if>
+      					<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" step="1" var="num">
+      						<a href="${num }" class='${num eq pageMaker.criteria.pageNum ? "active": "" }'>${num }</a>
+      					</c:forEach>
+      					<c:if test="${pageMaker.next }">
+      						<a href="${pageMaker.endPage+1 }">&raquo;</a>
+      					</c:if>
+      				</div>
+      			</div>
+      		</td>
+      	</tr>
 </ruler-basic-pagination>
 </div>
 </ui-heart-product>
@@ -335,6 +338,11 @@
             </div>
         </div>
     </section>
+    <form id="actionForm" action="/user/myLike.do" method="get">
+    	<input type="hidden" name="pageNum" value="${pageMaker.criteria.pageNum }">
+    	<input type="hidden" name="amount" value="${pageMaker.criteria.amount }">
+    	<!-- 검색조건, 검색어 -->
+    </form>
     <input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 </div>
 <footer>

@@ -35,6 +35,6 @@
     FROM pd_like
     WHERE member_id = #{loginMemberId}
   </select>
-
+  
 </mapper>
  
