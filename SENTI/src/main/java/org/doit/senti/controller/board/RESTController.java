@@ -9,6 +9,8 @@ import org.doit.senti.domain.board.ProductCategoryDTO;
 import org.doit.senti.domain.board.ProductLikeDTO;
 import org.doit.senti.mapper.BoardMapper;
 import org.doit.senti.mapper.CategoryMapper;
+import org.doit.senti.mapper.LikeMapper;
+import org.doit.senti.service.board.BoardService;
 import org.doit.senti.service.board.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -30,6 +32,8 @@ public class RESTController {
 	@Autowired
 	private BoardMapper boardMapper ;
 	
+	@Autowired
+	private BoardService boardService;
 	// @DeleteMapping
 	
 	@Autowired
@@ -107,13 +111,16 @@ public class RESTController {
 	}
 	
 	@PostMapping("/addlike.do")
-	public void addLike(
+	public int addLike(
 			@RequestBody BoardVO bvo,
 			HttpSession session) throws Exception {
         
 		System.out.println("addLikeController : " + bvo.getPdId());
+		
+		
 		ProductLikeDTO likeDTO = new ProductLikeDTO();
 		likeDTO.setPdId(bvo.getPdId());
+		 
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -124,10 +131,14 @@ public class RESTController {
 		
 		likeService.insertProductLike(likeDTO);
 		
+		
+		int likeCount = likeService.getLikeCount(bvo.getPdId());
+	    
+		return likeCount;
     }
 	
 	@PostMapping("/removelike.do")
-	public void removeLike(
+	public int removeLike(
 			@RequestBody BoardVO bvo) throws Exception {
 		
 		System.out.println("removeLikeController : " + bvo.getPdId());
@@ -140,6 +151,10 @@ public class RESTController {
 		likeDTO.setLoginMemberId(loginMemberId);
 		
 		likeService.deleteProductLike(likeDTO);
+		
+		int likeCount = likeService.getLikeCount(bvo.getPdId());
+		
+		return likeCount;
 		
 	}
 	

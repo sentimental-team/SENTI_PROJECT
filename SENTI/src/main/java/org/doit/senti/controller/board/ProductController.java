@@ -181,11 +181,18 @@ public class ProductController {
 			) throws Exception{
 		
 		log.info("> BoardController.list()...");
-		
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		
-		String loginMemberId = userDetails.getUsername();
+
+	     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String loginMemberId = null;
+
+		    // 인증 객체가 UserDetails 타입인지 확인하고 캐스팅
+		    if (authentication.getPrincipal() instanceof UserDetails) {
+		        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		        loginMemberId = userDetails.getUsername();
+		    } else {
+		        // principal이 UserDetails가 아닌 경우 처리
+		        loginMemberId = authentication.getPrincipal().toString();
+		    }
 		
 	     List<BoardVO> productList = boardService.getList(medium_ctgr_id);
 	     for (BoardVO product : productList){
@@ -226,7 +233,25 @@ public class ProductController {
 		
 		log.info("> BoardController2.list()...");
 		
-		model.addAttribute("pDetail", this.boardService.get(pd_id));
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		
+		String loginMemberId = userDetails.getUsername();
+		
+	     BoardVO product = boardService.get(pd_id);
+	     
+    	 ProductLikeDTO likeDTO = new ProductLikeDTO();
+    	 
+    	 likeDTO.setPdId(product.getPdId());
+    	 likeDTO.setLoginMemberId(loginMemberId);
+    	 
+    	 int likeCount = likeService.getLikeCount(product.getPdId());
+    	 int result = likeService.checkLike(likeDTO);
+    	 
+    	 product.setLikeCheck(result);
+    	 product.setPdLikeCount(likeCount);
+    	 
+		model.addAttribute("pDetail", product);
 		model.addAttribute("iDetail", this.boardService.getInfoImage(pd_id));
 		model.addAttribute("reviewCount", this.reviewMapper.reviewCount(pd_id));
 		model.addAttribute("reviews", this.reviewMapper.getReviews(pd_id));

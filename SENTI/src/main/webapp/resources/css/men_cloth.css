@@ -281,7 +281,6 @@ input[type="radio"]:checked+label {
 	text-decoration: line-through;
 }
 
-
 .kkk {
 	margin-right: 5px;
 	color: rgb(255, 72, 0);
@@ -401,6 +400,36 @@ input[type="radio"]:checked+label {
 	-webkit-line-clamp: 2;
 }
 
+.j h5 {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	padding-right: 26px;
+	font-size: 12px;
+	font-weight: 400;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	white-space: normal;
+	visibility: visible;
+	-webkit-line-clamp: 2;
+}
+.styled-text {
+	margin-left: 4px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    max-height: calc(4.2em);
+    font-size: inherit;
+    font-weight: 300;
+    overflow-wrap: break-word;
+    white-space: normal;
+    -webkit-line-clamp: 3;
+    margin-block-start: 1.67em;
+    margin-block-end: 1.67em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
 .widget {
 	-webkit-box-align: center;
 	align-items: center;

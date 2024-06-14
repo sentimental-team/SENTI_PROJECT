@@ -14,7 +14,7 @@ public class ProductLikeDTO {
 	private int pdId;
 	
 	private int likeCheck;
-	
+	private int pdLikeCount;
 	private String loginMemberId;
 	
 }

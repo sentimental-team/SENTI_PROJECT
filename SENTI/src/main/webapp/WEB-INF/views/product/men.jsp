@@ -1,11 +1,10 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ 
-taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>감도 깊은 취향 셀렉트샾 29CM</title>
+<title>감도 깊은 취향 셀렉트샾 29CM${loginMemberId}</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -91,20 +90,20 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                             <div class="ppp">
                                 <button  class="heart" data-pdid="${list.pdId }">
                                     <c:if test="${list.likeCheck eq 0 }">
-		       									<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
-		       										viewBox="0 0 20 20" class="bi-suit-heart">
-		       										<path
-		       											d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z"
-		       											fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5" />
-		       									</svg>
-	       									</c:if>
-	       									<c:if test="${list.likeCheck >= 1 }">
-		       									<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
-		       										viewBox="0 0 20 20" class="bi-suit-heart-fill">
-		       										<path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
-		       										fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
-		       									</svg>
-	       									</c:if>
+     									<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+     										viewBox="0 0 20 20" class="bi-suit-heart">
+     										<path
+     											d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z"
+     											fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5" />
+     									</svg>
+    									</c:if>
+    									<c:if test="${list.likeCheck >= 1 }">
+     									<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+     										viewBox="0 0 20 20" class="bi-suit-heart-fill">
+     										<path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
+     										fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
+     									</svg>
+    									</c:if>
 
                                     <h5 class="jj">${list.pdLikeCount }</h5>
                                 </button>
@@ -195,7 +194,7 @@ $(document).ready(function() {
                                     <div class="ppp">
                                     <button  class="heart" data-pdid="\${element.pdId }" onclick="clickHeart(this)" value="\${element.mediumCtgrId}">
 	                                    \${heartIcon}
-                                    <h5 class="jj">\${element.pdLikeCount}</h5>
+                                    <h5 class="j">\${element.pdLikeCount}</h5>
 	                                </button>
                                         <a href="#" class="review">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 13 12" class="css-ik4rmz e1f8g7yn1">
@@ -273,7 +272,7 @@ $(document).ready(function() {
                                     <div class="ppp">
                                     <button  class="heart" data-pdid="\${element.pdId }" onclick="clickHeart(this)">
 	                                    \${heartIcon}
-	                                <h5 class="jj">\${element.pdLikeCount}</h5>
+	                                	<h5 class="j">\${element.pdLikeCount}</h5>
 	                                </button>
                                         <a href="#" class="review">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 13 12" class="css-ik4rmz e1f8g7yn1">
@@ -356,12 +355,12 @@ $('.heart').on('click', function(){
 <script>
 function clickHeart(button) {
     let pdId = $(button).data("pdid");
-
     if ($(button).children('svg').hasClass('bi-suit-heart')) {
         // alert("빈하트 클릭" + pdId);
 
         $.ajax({
             url: "/product/addlike.do",
+            dataType: "json",
             type: "POST",
             data: JSON.stringify({ pdId: pdId }),
             contentType: 'application/json; charset=utf-8',
@@ -369,12 +368,17 @@ function clickHeart(button) {
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
-            success: function() {
+            success: function(result) {
                 console.log("좋아요 추가");
-                $(button).children('svg').attr('class', 'bi-suit-heart-fill');
-                location.updateProductList(updateProductList());
-                
-            }.bind(this),
+                let filledHeartSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+                    viewBox="0 0 20 20" class="bi-suit-heart-fill">
+                    <path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
+                    fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
+                </svg>`;
+                $(button).children('svg').replaceWith(filledHeartSVG);
+                // 해당 상품의 좋아요 수 업데이트
+                $(button).children('h5.j').text(result);
+            },
             error: function(request, status, error) {
                 console.log("addLike Ajax 에러 발생");
                 console.log("상태코드 : " + request.status);
@@ -386,6 +390,7 @@ function clickHeart(button) {
 
         $.ajax({
             url: "/product/removelike.do",
+            dataType: "json",
             type: "POST",
             data: JSON.stringify({ pdId: pdId }),
             contentType: 'application/json; charset=utf-8',
@@ -393,12 +398,16 @@ function clickHeart(button) {
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
             },
-            success: function() {
+            success: function(result) {
                 console.log("좋아요 삭제");
-                $(button).children('svg').attr('class', 'bi-suit-heart');
-                location.reload(updateProductList());
-                
-            }.bind(this),
+                let unFilledHeartSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+                    viewBox="0 0 20 20" class="bi-suit-heart">
+                    <path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
+                    fill="none" fill-rule="evenodd" stroke="black" stroke-width="1.5"></path>
+                </svg>`;
+                $(button).children('svg').replaceWith(unFilledHeartSVG);
+                $(button).children('h5.j').text(result);
+            },
             error: function(request, status, error) {
                 console.log("removeLike Ajax 에러 발생");
                 console.log("상태코드 : " + request.status);

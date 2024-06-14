@@ -195,14 +195,24 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
                                 <h2 id="pdp_product_name" class="css-xz8ybi ek83fdm5">${pDetail.pdName }
                                   </h2>
                             </div>
-                            <div class="css-1gyviqy ek83fdm6"><button class="e1xxmqg30 css-1qwq84l e12h9sp60"
-                                    type="button"><svg class="css-kglvp1 e1xxmqg31" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 18 18">
-                                        <path class="heart"
-                                            d="M9 6.088C9 3.831 10.791 2 13 2s4 1.83 4 4.088c0 1.743-1.46 3.23-1.46 3.23L9 16 2.46 9.318S1 7.83 1 6.088C1 3.831 2.791 2 5 2s4 1.83 4 4.088z"
-                                            fill="#ffffff" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="0.7">
-                                        </path>
-                                    </svg><span class="css-17mseqq e1xxmqg32">찜하기</span></button></div>
+                            <div class="css-1gyviqy ek83fdm6">
+                            <button class="heart" type="button" data-pdid="${pDetail.pdId }">
+                            <c:if test="${pDetail.likeCheck eq 0 }">
+								<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+									viewBox="0 0 20 20" class="bi-suit-heart">
+									<path
+										d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z"
+										fill="none" fill-rule="evenodd" stroke="#5d5d5d" stroke-width="1.5" />
+								</svg>
+							</c:if>
+							<c:if test="${pDetail.likeCheck >= 1 }">
+								<svg xmlns="http://www.w3.org/2000/svg" width="21" height="18"
+									viewBox="0 0 20 20" class="bi-suit-heart-fill">
+									<path d="M2.24 3.425a4.758 4.758 0 0 1 6.79 0c.416.421.74.901.971 1.413.23-.512.553-.992.97-1.413a4.758 4.758 0 0 1 6.79 0 4.91 4.91 0 0 1 0 6.88L10 18.166l-7.76-7.863-.166-.176a4.911 4.911 0 0 1 .166-6.703z" 
+									fill="red" fill-rule="evenodd" stroke="red" stroke-width="1.5"></path>
+								</svg>
+							</c:if>
+                            <span class="css-17mseqq e1xxmqg32">찜하기</span></button></div>
                         </div>
                         <c:choose>
                           <c:when test="${ not empty reviews }">
@@ -1001,9 +1011,10 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         <button class="css-3310rc e1l6y7zu0" type="button">TOP</button>
         <button class="css-1r1ons4 e10drivl0" type="button">Bottom</button>
     </div>
-    
+    <input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 </body>
 <script>
+const csrfToken = $('#csrf_token').val();
 $(document).ready(function() {
     $(".cartbtn").on("click", function(event) {
 
@@ -1085,6 +1096,63 @@ $("#option2").on("click", function(event){
    	     });
    	        
 	   
+</script>
+<script>
+$('.heart').on('click', function(){
+	let pdId = $(this).data("pdid");
+	let likeCheck = document.getElementById("likeCheck");
+	
+	 if($(this).children('svg').attr('class') == "bi-suit-heart"){
+		// alert("빈하트 클릭" + pdId);
+		
+		$.ajax({
+			url: "/product/addlike.do",
+			/* dataType: "json", */
+			type: "POST",
+			data: JSON.stringify({pdId: pdId}),
+			contentType: 'application/json; charset=utf-8',
+	        cache: false,
+	        beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
+	        success: function() {
+                console.log("좋아요 추가");
+                $(this).children('svg').attr('class', 'bi-suit-heart-fill');
+                location.reload()
+            }.bind(this),
+			error: function(request, status, error){
+				console.log("addLike Ajax 에러 발생");
+				console.log("상태코드 : " + request.status);
+			}
+		});
+		
+	}
+	
+	else if($(this).children('svg').attr('class') == "bi-suit-heart-fill"){
+		// alert("꽉찬 하트 클릭" + pdId);
+		
+		$.ajax({
+			url: "/product/removelike.do",
+			type: "POST",
+			data: JSON.stringify({pdId: pdId}),
+			contentType: 'application/json; charset=utf-8',
+	        cache: false,
+	        beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+            },
+	        success: function() {
+                console.log("좋아요 삭제");
+                $(this).children('svg').attr('class', 'bi-suit-heart');
+                location.reload()
+            }.bind(this),
+			error: function(request, status, error){
+				console.log("addLike Ajax 에러 발생");
+				console.log("상태코드 : " + request.status);
+			}
+		});
+		
+	}
+})
 </script>
 <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
