@@ -3,8 +3,6 @@ package org.doit.senti.mapper;
 import java.util.List;
 
 import org.doit.senti.domain.board.BoardVO;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public interface BoardMapper {
 	
@@ -19,6 +17,12 @@ public interface BoardMapper {
 	List<BoardVO> selectBylargeCtgrId(int largeCtgrId);
 	List<BoardVO> iRead(int pd_id);
 	BoardVO lRead(int large_ctgr_id);
+	List<BoardVO> oRead(int large_ctgr_id);
+	// 게시물 총 갯수
+	public int countBoard();
+
+	// 페이징 처리 게시글 조회
+	
 	
 	
 	/*

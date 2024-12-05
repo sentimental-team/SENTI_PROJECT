@@ -41,8 +41,16 @@ public class BoardVO {
 	private int payId;
 	private String largeCtgrName;
 	
+	// 좋아요 수
+	private int pdLikeCount;
+	private int likeCheck;
 
-	
+	// 리뷰 갯수, 리뷰 평점
+	private int reviewCnt;
+	private int reviewAvg;
+
+	//
+	private String selectOption;
 	
 }
 

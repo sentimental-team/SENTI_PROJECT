@@ -1,4 +1,3 @@
-<%@page import="org.doit.senti.domain.board.Main_CtgrVO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.util.ArrayList"%>
@@ -104,7 +103,7 @@
 <body>
     <div id="productForm" class="container">
         <h1>상품 등록 페이지</h1>
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="/product/productRegister.do?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
             <label for="pd_name">상품명:</label>
             <input type="text" id="pd_name" name="pdName" value="상품">
 			
@@ -114,8 +113,8 @@
 			<label class="" for="brand">브랜드:</label>
             <select class="brand" id="brand_id" name="brandId">
             	<option value="" disabled selected>카테고리를 선택해주세요</option>
-            	<c:forEach var="brand" items="메종마르지엘라">
-                    <option value= "1" selected>메종마르지엘라</option>
+            	<c:forEach items="${brandList }" var="brandList">
+                    <option value= "${brandList.brandId }" selected>${brandList.brandName }</option>
                 </c:forEach>
             </select>
             
@@ -134,42 +133,132 @@
             <label class="main_category" for="main_category">Main Category:</label>
             <select class="main_category" id="main_category" name="mainCtgrId">
 				<option value="" disabled selected>카테고리를 선택해주세요</option>
-				<option value="1" selected>여성</option>
+				<c:forEach items="${mainCtgrList }" var="mainCtgrList">
+					<option value="${mainCtgrList.mainCtgrId }">${mainCtgrList.mainCtgrName }</option>
+				</c:forEach>
 			</select>
 
             <label class="" for="large_category">Large Category:</label>
             <select class="large_category" id="large_category" name="largeCtgrId">
             	<option value="" disabled selected>카테고리를 선택해주세요</option>
-            	<option value="1" selected >여성의류</option>
+            	
             </select>
 
             <label class="" for="medium_category">Medium Category:</label>
             <select class="medium_category" id="medium_category" name="mediumCtgrId">
             	<option value="" disabled selected>카테고리를 선택해주세요</option>
-            	<option value="11"  selected>상의</option>
             </select>
 
             <label class="" for="small_category">Small Category:</label>
             <select class="small_category" id="small_category" name="smallCtgrId">
             	<option value="" disabled selected>카테고리를 선택해주세요</option>
-            	<option value="1" selected >반소매 티셔츠</option>
             </select>
 			<br>
 			<br>
             <button type="submit">등록</button>
             <button type="submit">수정</button>
-            <button type="submit" href="main.do">취소</button>
-            
-            <input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"></input>
-            
+            <button type="submit" href="/main.do">취소</button>
         </form>
     </div>
+    <input type="hidden" id="csrf_token" name="${_csrf.parameterName }" value="${_csrf.token }">
 </body>
  <footer>
 	<jsp:include page="/WEB-INF/views/layout/bottom.jsp" flush="false"></jsp:include>
 </footer>
 <script>
-
+	const csrfToken = $('#csrf_token').val();
+    $(document).ready(function() {
+        $(".main_category").on("change", function() {
+            // 선택된 옵션의 값을 가져옴
+            let selectedMainCategoryId = $(this).val();
+            // alert("선택된 Main Category ID: " + selectedMainCategoryId);
+            $.ajax({
+            	type: "POST",
+            	url: "/product/largeCtgr.do",
+            	data: JSON.stringify({mainCtgrId: selectedMainCategoryId}),
+            	contentType : 'application/json; charset=utf-8',
+            	cache: false,
+            	beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                },
+            	success: function(data){
+            		$(".large_category").empty();
+            		$.each(data, function(index, element) {
+                        $(".large_category").append(`
+                            <option value="\${element.largeCtgrId}">\${element.largeCtgrName}</option>
+                        `);
+                    });
+            		
+            	},
+            	error: function(){
+            		alert("error");
+            	}
+            }); // ajax
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(".large_category").on("click", function() {
+            // 선택된 옵션의 값을 가져옴
+            let selectedLargeCategoryId = $(this).val();
+            // alert("선택된 Main Category ID: " + selectedMainCategoryId);
+            $.ajax({
+            	type: "POST",
+            	url: "/product/mediumCtgr.do",
+            	data: JSON.stringify({largeCtgrId: selectedLargeCategoryId}),
+            	contentType : 'application/json; charset=utf-8',
+            	cache: false,
+            	beforeSend: function(xhr) {
+                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                },
+            	success: function(data){
+            		$(".medium_category").empty();
+            		$.each(data, function(index, element) {
+                        $(".medium_category").append(`
+                            <option value="\${element.mediumCtgrId}">\${element.mediumCtgrName}</option>
+                        `);
+                    });
+            		
+            	},
+            	error: function(){
+            		alert("error");
+            	}
+            }); // ajax
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $(".medium_category").on("click", function() {
+            // 선택된 옵션의 값을 가져옴
+            let selectedMediumCategoryId = $(this).val();
+            // alert("선택된 Main Category ID: " + selectedMediumCategoryId);
+	            $.ajax({
+	            	type: "POST",
+	            	url: "/product/smallCtgr.do",
+	            	data: JSON.stringify({mediumCtgrId: selectedMediumCategoryId}),
+	            	contentType : 'application/json; charset=utf-8',
+	            	cache: false,
+	            	beforeSend: function(xhr) {
+	                    xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+	                },
+	            	success: function(data){
+	            		$(".small_category").empty();
+	            		$.each(data, function(index, element) {
+	                        $(".small_category").append(`
+	                            <option value="\${element.smallCtgrId}">\${element.smallCtgrName}</option>
+	                        `);
+	                    });
+	            		
+	            	},
+	            	error: function(){
+	            		alert("error");
+	            	}
+	            }); // ajax
+        
+        });
+    });
 </script>
 
 </html>

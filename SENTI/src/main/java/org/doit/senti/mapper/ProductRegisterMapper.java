@@ -15,4 +15,6 @@ public interface ProductRegisterMapper {
 	
 	public int insertProductImgInfo(ProductImageDTO pdImgDTO) throws ClassNotFoundException, SQLException;
 	
+	public int insertProductNoneSmallCtgr(ProductRegisterDTO pdDTO) throws ClassNotFoundException, SQLException;
+	
 }

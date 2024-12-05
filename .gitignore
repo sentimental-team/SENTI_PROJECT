@@ -1,3 +1,5 @@
 /.metadata/
 /Servers/
-/SENTI/target
+/SENTI/target/
+/SENTI/.classpath
+
